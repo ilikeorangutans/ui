@@ -1,0 +1,6 @@
+package: github.com/ilikeorangutans/ui
+import:
+- package: github.com/veandco/go-sdl2
+  subpackages:
+  - sdl
+  - sdl_ttf
