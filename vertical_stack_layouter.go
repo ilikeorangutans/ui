@@ -10,10 +10,10 @@ type VerticalStackLayouter struct {
 func (l *VerticalStackLayouter) Layout(parent *sdl.Rect, c Widget) {
 	l.y += l.top
 	dimensions := c.Dimensions()
-	c.ScreenDimensions().Y = int32(l.y)
-	c.ScreenDimensions().X = parent.X
-	c.ScreenDimensions().W = dimensions.W
-	c.ScreenDimensions().H = dimensions.H
+	c.Bounds().Y = int32(l.y)
+	c.Bounds().X = parent.X
+	c.Bounds().W = dimensions.W
+	c.Bounds().H = dimensions.H
 
 	l.y += int(c.Dimensions().H)
 	l.y += l.bottom

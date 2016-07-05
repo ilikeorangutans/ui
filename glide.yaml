@@ -4,3 +4,6 @@ import:
   subpackages:
   - sdl
   - sdl_ttf
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert

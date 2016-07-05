@@ -1,6 +1,10 @@
-hash: af494f924c89636023fadb7b5f452ab4b2d147909046bd2fb0860d3de00c9639
-updated: 2016-07-01T16:06:39.670904429-04:00
+hash: 469b7e007241db94828d216ff99bbdbd3a99b29ee8d8304c17b6c6da172f1bea
+updated: 2016-07-04T23:00:16.232362719-04:00
 imports:
+- name: github.com/stretchr/testify
+  version: d77da356e56a7428ad25149ca77381849a6a5232
+  subpackages:
+  - assert
 - name: github.com/veandco/go-sdl2
   version: b219958c762806c0589aef6bdf070046e45fee53
   subpackages:

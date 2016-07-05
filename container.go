@@ -4,7 +4,8 @@ import "github.com/veandco/go-sdl2/sdl"
 
 func NewContainer() *Container {
 	return &Container{
-		screenDimensions: &sdl.Rect{},
+		dimensions: &sdl.Rect{},
+		bounds:     &sdl.Rect{},
 		layouter: &HorizontalStackLayouter{
 			top: 3,
 		},
@@ -12,25 +13,46 @@ func NewContainer() *Container {
 }
 
 type Container struct {
-	children         []Widget
-	layouter         Layouter
-	screenDimensions *sdl.Rect
+	children   []Widget
+	layouter   Layouter
+	dimensions *sdl.Rect
+	bounds     *sdl.Rect
 }
 
-func (c *Container) ScreenDimensions() *sdl.Rect {
-	return c.screenDimensions
+func (c *Container) Dimensions() *sdl.Rect {
+	return c.dimensions
 }
 
-func (c *Container) Add(child *Label) {
+func (c *Container) Bounds() *sdl.Rect {
+	return c.bounds
+}
+
+func (c *Container) SetBounds(x, y, w, h int32) {
+	c.bounds.X = x
+	c.bounds.Y = y
+	c.bounds.W = w
+	c.bounds.H = h
+}
+
+func (c *Container) Get(n int) Widget {
+	return c.children[n]
+}
+
+func (c *Container) Children() []Widget {
+	return c.children
+}
+
+func (c *Container) Add(child Widget) {
 	c.children = append(c.children, child)
 }
 
 func (c *Container) Draw(renderer *sdl.Renderer) {
+
+	c.layouter.Layout(c)
+
 	for i := range c.children {
 		child := c.children[i]
-		c.layouter.Layout(c.ScreenDimensions(), child)
 		child.Draw(renderer)
 	}
 
-	c.layouter.Reset(c.screenDimensions)
 }

@@ -4,6 +4,7 @@ import "github.com/veandco/go-sdl2/sdl"
 
 type Widget interface {
 	Draw(renderer *sdl.Renderer)
-	ScreenDimensions() *sdl.Rect
+	SetBounds(x, y, w, h int32)
+	Bounds() *sdl.Rect
 	Dimensions() *sdl.Rect
 }
