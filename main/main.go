@@ -10,10 +10,7 @@ import (
 	"github.com/veandco/go-sdl2/sdl_ttf"
 )
 
-func main() {
-	sdl.Init(sdl.INIT_EVERYTHING)
-	ttf.Init()
-
+func loadFont() *ttf.Font {
 	var fontPath string
 	if runtime.GOOS == "darwin" {
 		fontPath = "/Library/Fonts/Verdana.ttf"
@@ -25,7 +22,16 @@ func main() {
 		panic(err)
 	}
 
-	window, err := sdl.CreateWindow("test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, 800, 600, sdl.WINDOW_SHOWN)
+	return font
+}
+
+func main() {
+	sdl.Init(sdl.INIT_EVERYTHING)
+	ttf.Init()
+
+	font := loadFont()
+
+	window, err := sdl.CreateWindow("test", sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, 800, 600, sdl.WINDOW_SHOWN|sdl.WINDOW_RESIZABLE)
 	if err != nil {
 		panic(err)
 	}
@@ -64,6 +70,13 @@ func main() {
 				s := fmt.Sprintf("sym:%c", t.Keysym.Sym)
 				label.SetText(s)
 
+			case *sdl.WindowEvent:
+				switch t.Event {
+				case sdl.WINDOWEVENT_RESIZED:
+					c.SetBounds(0, 0, t.Data1, t.Data2)
+				case sdl.WINDOWEVENT_SIZE_CHANGED:
+					c.SetBounds(0, 0, t.Data1, t.Data2)
+				}
 			}
 		}
 

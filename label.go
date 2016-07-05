@@ -51,6 +51,8 @@ func (l *Label) SetBounds(x, y, w, h int32) {
 	l.bounds.Y = y
 	l.bounds.W = w
 	l.bounds.H = h
+	l.textDimensions.X = l.bounds.X
+	l.textDimensions.Y = l.bounds.Y
 }
 
 func (l *Label) Draw(renderer *sdl.Renderer) {
@@ -66,8 +68,6 @@ func (l *Label) Draw(renderer *sdl.Renderer) {
 			panic(err)
 		}
 		l.texture = texture
-		l.textDimensions.X = l.bounds.X
-		l.textDimensions.Y = l.bounds.Y
 		l.textDimensions.W = surface.W
 		l.textDimensions.H = surface.H
 		l.updateTexture = false

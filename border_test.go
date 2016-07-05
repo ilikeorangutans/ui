@@ -45,9 +45,6 @@ func TestNewBorderCalculatesBoundsCorrectly(t *testing.T) {
 	assert.Equal(t, int32(200), b.Bounds().W)
 	assert.Equal(t, int32(50), b.Bounds().H)
 
-	assert.Equal(t, int32(120), b.Dimensions().W)
-	assert.Equal(t, int32(30), b.Dimensions().H)
-
 	assert.Equal(t, int32(20), b.child.Bounds().X)
 	assert.Equal(t, int32(30), b.child.Bounds().Y)
 	assert.Equal(t, int32(180), b.child.Bounds().W)

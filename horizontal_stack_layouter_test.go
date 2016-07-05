@@ -58,7 +58,21 @@ func TestHorizontalStackLayouterWithFixedWithChild(t *testing.T) {
 }
 
 func TestHorizontalStackLayouterSetsXYAccordingly(t *testing.T) {
+	c := NewContainer()
+	c.SetBounds(10, 20, 800, 200)
+	w1 := NewSpacer(0, 300)
+	w2 := NewSpacer(0, 0)
+	w3 := NewSpacer(0, 0)
+	c.Add(w1)
+	c.Add(w2)
+	c.Add(w3)
+	layouter := &HorizontalStackLayouter{}
 
+	layouter.Layout(c)
+
+	assert.Equal(t, int32(10), w1.Bounds().X)
+	assert.Equal(t, int32(276), w2.Bounds().X)
+	assert.Equal(t, int32(542), w3.Bounds().X)
 }
 
 func TestDistributeSizes(t *testing.T) {

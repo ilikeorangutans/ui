@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"runtime"
+
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/sdl_ttf"
 )
@@ -16,8 +18,20 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	font, err = ttf.OpenFont("/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf", 11)
+	font = loadFont()
+}
+
+func loadFont() *ttf.Font {
+	var fontPath string
+	if runtime.GOOS == "darwin" {
+		fontPath = "/Library/Fonts/Verdana.ttf"
+	} else if runtime.GOOS == "linux" {
+		fontPath = "/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf"
+	}
+	font, err := ttf.OpenFont(fontPath, 12)
 	if err != nil {
 		panic(err)
 	}
+
+	return font
 }
