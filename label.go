@@ -7,24 +7,22 @@ import (
 
 func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 	return &Label{
+		sizeable:       newSizeable(),
 		text:           text,
 		font:           font,
 		updateTexture:  true,
-		dimensions:     &sdl.Rect{},
 		color:          color,
-		bounds:         &sdl.Rect{},
 		textDimensions: &sdl.Rect{},
 	}
 }
 
 type Label struct {
+	sizeable
 	text           string
 	font           *ttf.Font
 	updateTexture  bool
 	texture        *sdl.Texture
 	color          sdl.Color
-	dimensions     *sdl.Rect
-	bounds         *sdl.Rect
 	textDimensions *sdl.Rect
 	stretchToFill  bool
 }
@@ -38,19 +36,8 @@ func (l *Label) SetText(text string) {
 	l.updateTexture = true
 }
 
-func (l *Label) Dimensions() *sdl.Rect {
-	return l.dimensions
-}
-
-func (l *Label) Bounds() *sdl.Rect {
-	return l.bounds
-}
-
 func (l *Label) SetBounds(x, y, w, h int32) {
-	l.bounds.X = x
-	l.bounds.Y = y
-	l.bounds.W = w
-	l.bounds.H = h
+	l.sizeable.SetBounds(x, y, w, h)
 	l.textDimensions.X = l.bounds.X
 	l.textDimensions.Y = l.bounds.Y
 }

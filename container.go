@@ -4,8 +4,7 @@ import "github.com/veandco/go-sdl2/sdl"
 
 func NewContainer() *Container {
 	return &Container{
-		dimensions: &sdl.Rect{},
-		bounds:     &sdl.Rect{},
+		sizeable: newSizeable(),
 		layouter: &HorizontalStackLayouter{
 			top: 3,
 		},
@@ -13,25 +12,9 @@ func NewContainer() *Container {
 }
 
 type Container struct {
-	children   []Widget
-	layouter   Layouter
-	dimensions *sdl.Rect
-	bounds     *sdl.Rect
-}
-
-func (c *Container) Dimensions() *sdl.Rect {
-	return c.dimensions
-}
-
-func (c *Container) Bounds() *sdl.Rect {
-	return c.bounds
-}
-
-func (c *Container) SetBounds(x, y, w, h int32) {
-	c.bounds.X = x
-	c.bounds.Y = y
-	c.bounds.W = w
-	c.bounds.H = h
+	sizeable
+	children []Widget
+	layouter Layouter
 }
 
 func (c *Container) Get(n int) Widget {
@@ -54,5 +37,4 @@ func (c *Container) Draw(renderer *sdl.Renderer) {
 		child := c.children[i]
 		child.Draw(renderer)
 	}
-
 }

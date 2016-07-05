@@ -4,30 +4,22 @@ import "github.com/veandco/go-sdl2/sdl"
 
 func NewBorder(w Widget, width int32, color sdl.Color) *Border {
 	return &Border{
+		sizeable:  newSizeable(),
 		child:     w,
 		thickness: width,
 		color:     color,
-		bounds:    &sdl.Rect{},
 	}
 }
 
 type Border struct {
+	sizeable
 	child     Widget
 	thickness int32
 	color     sdl.Color
-	bounds    *sdl.Rect
-}
-
-func (b *Border) Bounds() *sdl.Rect {
-	return b.bounds
 }
 
 func (b *Border) SetBounds(x, y, w, h int32) {
-	b.bounds.X = x
-	b.bounds.Y = y
-	b.bounds.W = w
-	b.bounds.H = h
-
+	b.sizeable.SetBounds(x, y, w, h)
 	b.child.SetBounds(x+b.thickness, y+b.thickness, w-(2*b.thickness), h-(2*b.thickness))
 }
 
