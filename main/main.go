@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"runtime"
 
 	"github.com/ilikeorangutans/ui"
 	"github.com/veandco/go-sdl2/sdl"
@@ -13,7 +14,13 @@ func main() {
 	sdl.Init(sdl.INIT_EVERYTHING)
 	ttf.Init()
 
-	font, err := ttf.OpenFont("/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf", 12)
+	var fontPath string
+	if runtime.GOOS == "darwin" {
+		fontPath = "/Library/Fonts/Verdana.ttf"
+	} else if runtime.GOOS == "linux" {
+		fontPath = "/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf"
+	}
+	font, err := ttf.OpenFont(fontPath, 12)
 	if err != nil {
 		panic(err)
 	}
