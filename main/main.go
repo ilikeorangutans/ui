@@ -27,7 +27,9 @@ func loadFont() *ttf.Font {
 
 func main() {
 	sdl.Init(sdl.INIT_EVERYTHING)
+	defer sdl.Quit()
 	ttf.Init()
+	defer ttf.Quit()
 
 	font := loadFont()
 
@@ -41,6 +43,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer renderer.Destroy()
 
 	label := ui.NewLabel("horray", font, sdl.Color{R: 255, G: 255, B: 255, A: 255})
 	label.Dimensions().W = 200
@@ -70,6 +73,23 @@ func main() {
 				s := fmt.Sprintf("sym:%c", t.Keysym.Sym)
 				label.SetText(s)
 
+			case *sdl.MouseButtonEvent:
+				// state 1 = down, state 0 = up
+				if t.State == 0 {
+					log.Printf("[%d ms] mouse button %d state %d", t.Timestamp, t.Button, t.State)
+					w := findComponentUnder(c, t.X, t.Y)
+					log.Printf("[%d ms] found %d components", t.Timestamp, len(w))
+					for _, w := range w {
+						log.Printf("[%d ms] found component %v", t.Timestamp, w.Bounds())
+					}
+
+					v := &ui.LoggingVisitor{}
+					c.Visit(v)
+				}
+
+			case *sdl.MouseWheelEvent:
+				log.Printf("[%d ms] mouse wheel x %d y %d", t.Timestamp, t.X, t.Y)
+
 			case *sdl.WindowEvent:
 				switch t.Event {
 				case sdl.WINDOWEVENT_RESIZED:
@@ -80,6 +100,8 @@ func main() {
 			}
 		}
 
+		c.Layout()
+
 		renderer.SetDrawColor(0, 0, 0, 0)
 		renderer.Clear()
 
@@ -88,5 +110,13 @@ func main() {
 		renderer.Present()
 		sdl.Delay(33)
 	}
+}
 
+func findComponentUnder(root *ui.Container, x, y int32) []ui.Widget {
+	f := &ui.LocatingFinder{
+		X: x,
+		Y: y,
+	}
+	root.Visit(f)
+	return f.Stack
 }

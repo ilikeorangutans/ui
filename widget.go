@@ -7,4 +7,6 @@ type Widget interface {
 	SetBounds(x, y, w, h int32)
 	Bounds() *sdl.Rect
 	Dimensions() *sdl.Rect
+	Visit(WidgetVisitor)
+	Layout()
 }

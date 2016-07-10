@@ -48,3 +48,12 @@ func (b *Border) Draw(renderer *sdl.Renderer) {
 	renderer.DrawRect(b.bounds)
 	b.child.Draw(renderer)
 }
+
+func (b *Border) Layout() {
+	b.child.Layout()
+}
+
+func (b *Border) Visit(visitor WidgetVisitor) {
+	// TODO: either we add a visitBorder or we have to represent borders differnetly
+	visitor.VisitWidget(b.child)
+}

@@ -1,6 +1,10 @@
 package ui
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"log"
+
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 func NewContainer() *Container {
 	return &Container{
@@ -29,12 +33,24 @@ func (c *Container) Add(child Widget) {
 	c.children = append(c.children, child)
 }
 
-func (c *Container) Draw(renderer *sdl.Renderer) {
-
+func (c *Container) Layout() {
 	c.layouter.Layout(c)
+	for i := range c.children {
+		c.children[i].Layout()
+	}
+}
 
+func (c *Container) Draw(renderer *sdl.Renderer) {
 	for i := range c.children {
 		child := c.children[i]
 		child.Draw(renderer)
+	}
+}
+
+func (c *Container) Visit(visitor WidgetVisitor) {
+	log.Printf("Container.Visit")
+	visitNext := visitor.VisitContainer(c)
+	for i := range visitNext {
+		visitNext[i].Visit(visitor)
 	}
 }

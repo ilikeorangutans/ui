@@ -69,3 +69,10 @@ func (l *Label) Draw(renderer *sdl.Renderer) {
 
 	renderer.Copy(l.texture, nil, boundsToUse)
 }
+
+func (c *Label) Layout() {
+}
+
+func (l *Label) Visit(visitor WidgetVisitor) {
+	visitor.VisitWidget(l)
+}

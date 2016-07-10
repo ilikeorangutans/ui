@@ -1,6 +1,10 @@
 package ui
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"log"
+
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 // NewSpacer returns a new spacer with the given dimensions
 func NewSpacer(w, h int32) *Spacer {
@@ -15,4 +19,12 @@ type Spacer struct {
 }
 
 func (s *Spacer) Draw(renderer *sdl.Renderer) {
+}
+
+func (s *Spacer) Visit(visitor WidgetVisitor) {
+	log.Println("Spacer.Visit")
+	visitor.VisitWidget(s)
+}
+
+func (s *Spacer) Layout() {
 }
