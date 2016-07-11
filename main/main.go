@@ -82,9 +82,6 @@ func main() {
 					for _, w := range w {
 						log.Printf("[%d ms] found component %v", t.Timestamp, w.Bounds())
 					}
-
-					v := &ui.LoggingVisitor{}
-					c.Visit(v)
 				}
 
 			case *sdl.MouseWheelEvent:

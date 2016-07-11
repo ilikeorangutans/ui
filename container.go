@@ -1,10 +1,6 @@
 package ui
 
-import (
-	"log"
-
-	"github.com/veandco/go-sdl2/sdl"
-)
+import "github.com/veandco/go-sdl2/sdl"
 
 func NewContainer() *Container {
 	return &Container{
@@ -48,7 +44,6 @@ func (c *Container) Draw(renderer *sdl.Renderer) {
 }
 
 func (c *Container) Visit(visitor WidgetVisitor) {
-	log.Printf("Container.Visit")
 	visitNext := visitor.VisitContainer(c)
 	for i := range visitNext {
 		visitNext[i].Visit(visitor)

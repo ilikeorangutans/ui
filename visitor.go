@@ -29,7 +29,6 @@ type LocatingFinder struct {
 }
 
 func (v *LocatingFinder) VisitContainer(c *Container) []Widget {
-	log.Println("LocatingFinder.VisitContainer")
 	if PointInRect(v.X, v.Y, c.Bounds()) {
 		v.Stack = append(v.Stack, c)
 		return c.Children()
@@ -38,7 +37,6 @@ func (v *LocatingFinder) VisitContainer(c *Container) []Widget {
 }
 
 func (v *LocatingFinder) VisitWidget(w Widget) {
-	log.Println("LocatingFinder.VisitWidget")
 	if PointInRect(v.X, v.Y, w.Bounds()) {
 		v.Stack = append(v.Stack, w)
 	}
