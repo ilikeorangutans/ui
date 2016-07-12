@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"log"
+
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/sdl_ttf"
 )
@@ -18,6 +20,7 @@ func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 
 type Label struct {
 	sizeable
+	EventHandlers
 	text           string
 	font           *ttf.Font
 	updateTexture  bool
@@ -71,6 +74,10 @@ func (l *Label) Draw(renderer *sdl.Renderer) {
 }
 
 func (c *Label) Layout() {
+}
+
+func (l *Label) OnMouseClick(e MouseClickEvent) {
+	log.Printf("Label.OnMouseClick() \n")
 }
 
 func (l *Label) Visit(visitor WidgetVisitor) {

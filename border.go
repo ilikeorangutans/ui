@@ -53,6 +53,8 @@ func (b *Border) Layout() {
 	b.child.Layout()
 }
 
+func (b *Border) OnEvent(event Event) {}
+
 func (b *Border) Visit(visitor WidgetVisitor) {
 	// TODO: either we add a visitBorder or we have to represent borders differnetly
 	visitor.VisitWidget(b.child)

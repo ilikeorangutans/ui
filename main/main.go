@@ -76,12 +76,10 @@ func main() {
 			case *sdl.MouseButtonEvent:
 				// state 1 = down, state 0 = up
 				if t.State == 0 {
-					log.Printf("[%d ms] mouse button %d state %d", t.Timestamp, t.Button, t.State)
+					log.Printf("[%d ms] mouse button %d state %d button %d", t.Timestamp, t.Button, t.State, t.Button)
+					event := ui.NewMouseClickEvent(t.Timestamp)
 					w := findComponentUnder(c, t.X, t.Y)
-					log.Printf("[%d ms] found %d components", t.Timestamp, len(w))
-					for _, w := range w {
-						log.Printf("[%d ms] found component %v", t.Timestamp, w.Bounds())
-					}
+					w.Notify(event)
 				}
 
 			case *sdl.MouseWheelEvent:
@@ -109,7 +107,7 @@ func main() {
 	}
 }
 
-func findComponentUnder(root *ui.Container, x, y int32) []ui.Widget {
+func findComponentUnder(root *ui.Container, x, y int32) ui.WidgetStack {
 	f := &ui.LocatingFinder{
 		X: x,
 		Y: y,

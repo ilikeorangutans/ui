@@ -33,7 +33,7 @@ func (l *HorizontalStackLayouter) Layout(parent *Container) {
 // 3) all requested fixed widths exceed the available space, then they will be
 // all equally resized to fit the available space.
 func distributeSizes(available int32, sizes []int32) []int32 {
-	var result []int32 = make([]int32, len(sizes))
+	var result = make([]int32, len(sizes))
 	var remaining, required int32
 	var fillers []int
 

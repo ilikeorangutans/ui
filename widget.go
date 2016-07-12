@@ -9,4 +9,5 @@ type Widget interface {
 	Dimensions() *sdl.Rect
 	Visit(WidgetVisitor)
 	Layout()
+	OnEvent(event Event)
 }

@@ -12,6 +12,7 @@ func NewContainer() *Container {
 }
 
 type Container struct {
+	EventHandlers
 	sizeable
 	children []Widget
 	layouter Layouter
