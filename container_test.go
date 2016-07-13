@@ -10,10 +10,12 @@ func TestRegisterEventHandlers(t *testing.T) {
 	c := NewContainer()
 
 	called := false
-	c.AddEventHandler("foo", func(e Event) { called = true })
+	c.AddEventHandler("MouseClickEvent", func(e Event) { called = true })
 
 	assert.Equal(t, 1, len(c.eventHandlers))
 
 	event := NewMouseClickEvent(123)
 	c.OnEvent(event)
+
+	assert.True(t, called)
 }
