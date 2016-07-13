@@ -21,6 +21,7 @@ func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 type Label struct {
 	sizeable
 	EventHandlers
+	border         *Border
 	text           string
 	font           *ttf.Font
 	updateTexture  bool
@@ -28,6 +29,11 @@ type Label struct {
 	color          sdl.Color
 	textDimensions *sdl.Rect
 	stretchToFill  bool
+}
+
+func (l *Label) SetBorder(border *Border) {
+	l.border = border
+	l.sizeable.SetBorder(border.Margin)
 }
 
 func (l *Label) SetText(text string) {
@@ -41,39 +47,45 @@ func (l *Label) SetText(text string) {
 
 func (l *Label) SetBounds(x, y, w, h int32) {
 	l.sizeable.SetBounds(x, y, w, h)
-	l.textDimensions.X = l.bounds.X
-	l.textDimensions.Y = l.bounds.Y
+	l.textDimensions.X = l.drawArea.X
+	l.textDimensions.Y = l.drawArea.Y
+	l.border.SetBounds(l.bounds)
+}
+
+func (l *Label) renderTexture(renderer *sdl.Renderer) {
+	surface, err := l.font.RenderUTF8_Solid(l.text, l.color)
+	if err != nil {
+		panic(err)
+	}
+	defer surface.Free()
+
+	texture, err := renderer.CreateTextureFromSurface(surface)
+	if err != nil {
+		panic(err)
+	}
+	l.texture = texture
+	l.textDimensions.W = surface.W
+	l.textDimensions.H = surface.H
+	l.updateTexture = false
 }
 
 func (l *Label) Draw(renderer *sdl.Renderer) {
 	if l.updateTexture {
-		surface, err := l.font.RenderUTF8_Solid(l.text, l.color)
-		if err != nil {
-			panic(err)
-		}
-		defer surface.Free()
+		l.renderTexture(renderer)
+	}
 
-		texture, err := renderer.CreateTextureFromSurface(surface)
-		if err != nil {
-			panic(err)
-		}
-		l.texture = texture
-		l.textDimensions.W = surface.W
-		l.textDimensions.H = surface.H
-		l.updateTexture = false
+	if l.border != nil {
+		l.border.Draw(renderer)
 	}
 
 	var boundsToUse *sdl.Rect
 	if l.stretchToFill {
-		boundsToUse = l.bounds
+		boundsToUse = l.drawArea
 	} else {
 		boundsToUse = l.textDimensions
 	}
 
 	renderer.Copy(l.texture, nil, boundsToUse)
-}
-
-func (c *Label) Layout() {
 }
 
 func (l *Label) OnMouseClick(e MouseClickEvent) {

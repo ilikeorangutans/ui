@@ -10,4 +10,5 @@ type Widget interface {
 	OnEvent(event Event)
 	SetBounds(x, y, w, h int32)
 	Visit(WidgetVisitor)
+	SetBorder(border *Border)
 }

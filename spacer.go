@@ -12,10 +12,14 @@ func NewSpacer(w, h int32) *Spacer {
 // Spacer is a component that will use as much space as configured.
 type Spacer struct {
 	sizeable
+	border *Border
 	EventHandlers
 }
 
 func (s *Spacer) Draw(renderer *sdl.Renderer) {
+}
+
+func (s *Spacer) SetBorder(border *Border) {
 }
 
 func (s *Spacer) Visit(visitor WidgetVisitor) {

@@ -71,6 +71,7 @@ type Layouter interface {
 	Layout(parent *Container)
 }
 
+// Margin is a set of margins: top, right, bottom, and left
 type Margin struct {
 	top, right, bottom, left int32
 }

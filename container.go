@@ -14,6 +14,7 @@ func NewContainer() *Container {
 type Container struct {
 	EventHandlers
 	sizeable
+	border   *Border
 	children []Widget
 	layouter Layouter
 }
@@ -28,6 +29,10 @@ func (c *Container) Children() []Widget {
 
 func (c *Container) Add(child Widget) {
 	c.children = append(c.children, child)
+}
+
+func (c *Container) SetBorder(border *Border) {
+	c.border = border
 }
 
 func (c *Container) Layout() {

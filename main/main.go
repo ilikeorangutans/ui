@@ -46,15 +46,18 @@ func main() {
 	defer renderer.Destroy()
 
 	label := ui.NewLabel("horray", font, sdl.Color{R: 255, G: 255, B: 255, A: 255})
+	label.SetBorder(ui.NewBorder(10, sdl.Color{G: 255, A: 255}))
 	label.Dimensions().W = 200
 	label2 := ui.NewLabel("label two", font, sdl.Color{R: 255, G: 255, B: 0, A: 255})
+	label2.SetBorder(ui.NewBorder(35, sdl.Color{R: 255, A: 255}))
 	label3 := ui.NewLabel("label 3 this is awesome!!", font, sdl.Color{R: 255, G: 0, B: 255, A: 255})
+	label3.SetBorder(ui.NewBorder(15, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
 
 	c := ui.NewContainer()
 	c.SetBounds(0, 0, 800, 200)
-	c.Add(ui.NewBorder(label, 5, sdl.Color{G: 255, A: 255}))
-	c.Add(ui.NewBorder(label2, 10, sdl.Color{R: 255, A: 255}))
+	c.Add(label)
+	c.Add(label2)
 	c.Add(label3)
 	running := true
 	var event sdl.Event
