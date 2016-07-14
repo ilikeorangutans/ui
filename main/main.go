@@ -59,6 +59,7 @@ func main() {
 	c.Add(label)
 	c.Add(label2)
 	c.Add(label3)
+	c.Add(ui.NewButton("I'm a button!", font))
 	running := true
 	var event sdl.Event
 	for running {
@@ -77,17 +78,11 @@ func main() {
 				label.SetText(s)
 
 			case *sdl.MouseButtonEvent:
-				// state 1 = down, state 0 = up
-				if t.State == 0 {
-					log.Printf("[%d ms] mouse button %d state %d button %d", t.Timestamp, t.Button, t.State, t.Button)
-					event := ui.NewMouseClickEvent(t.Timestamp)
-					w := findComponentUnder(c, t.X, t.Y)
-					for i := range w {
-						b := w[i].Bounds()
-						log.Printf("Found comp %d at %d,%d %dx%d\n", i, b.X, b.Y, b.W, b.H)
-					}
-					w.Notify(event)
-				}
+				event := ui.NewMouseClickEventFromSdlEvent(t)
+				w := findComponentUnder(c, t.X, t.Y)
+				w.Notify(event)
+
+				label3.SetText(fmt.Sprintf("%s", event.Data))
 
 			case *sdl.MouseWheelEvent:
 				log.Printf("[%d ms] mouse wheel x %d y %d", t.Timestamp, t.X, t.Y)

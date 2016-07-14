@@ -20,7 +20,7 @@ func TestNewSizeableWithDimensions(t *testing.T) {
 
 func TestSizeableWithBorderHasSmallerDrawArea(t *testing.T) {
 	s := newSizeableWithDimensions(200, 100)
-	s.SetBorder(Margin{10, 20, 5, 15})
+	s.SetBorder(&Border{Margin: Margin{10, 20, 5, 15}})
 	s.Layout()
 
 	assert.Equal(t, int32(200), s.Dimensions().W)

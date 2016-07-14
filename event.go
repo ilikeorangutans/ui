@@ -1,10 +1,8 @@
 package ui
 
-import (
-	"fmt"
-	"log"
-)
+import "fmt"
 
+// Event is a single event the ui framework is interested in. An Event has a timestamp (relative to app startup), a string Type, and a Data field with event specific payload.
 type Event struct {
 	Timestamp uint32
 	Type      string
@@ -29,7 +27,6 @@ func (h *EventHandlers) AddEventHandler(t string, handler EventHandlerFunc) {
 }
 
 func (h *EventHandlers) OnEvent(event Event) {
-	log.Printf("EventHandlers.OnEvent(%s)\n", event)
 	if h.eventHandlers == nil || len(h.eventHandlers) == 0 {
 		return
 	}

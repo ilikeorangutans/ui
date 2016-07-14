@@ -15,12 +15,13 @@ func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 		updateTexture:  true,
 		color:          color,
 		textDimensions: &sdl.Rect{},
+		EventHandlers:  &EventHandlers{},
 	}
 }
 
 type Label struct {
 	sizeable
-	EventHandlers
+	*EventHandlers
 	text           string
 	font           *ttf.Font
 	updateTexture  bool
