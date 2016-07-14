@@ -1,8 +1,6 @@
 package ui
 
 import (
-	"log"
-
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/sdl_ttf"
 )
@@ -31,6 +29,14 @@ func (b *Button) Draw(renderer *sdl.Renderer) {
 }
 
 func (b *Button) OnMouseClick(e Event) {
-	log.Printf("Button.OnMouseClick()")
+	mouseClick := e.Data.(MouseClickEvent)
+	if mouseClick.Button != LMB {
+		return
+	}
 
+	if mouseClick.State == ButtonDown {
+		b.border.style = LoweredBorderStyle{}
+	} else if mouseClick.State == ButtonUp {
+		b.border.style = RaisedBorderStyle{}
+	}
 }
