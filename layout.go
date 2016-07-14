@@ -6,7 +6,7 @@ func newSizeable() sizeable {
 	return sizeable{
 		dimensions: &sdl.Rect{},
 		bounds:     &sdl.Rect{},
-		border:     Margin{},
+		border:     EmptyBorder(),
 		drawArea:   &sdl.Rect{},
 	}
 }
@@ -21,7 +21,7 @@ func newSizeableWithDimensions(w, h int32) sizeable {
 			W: w,
 			H: h,
 		},
-		border:   Margin{},
+		border:   EmptyBorder(),
 		drawArea: &sdl.Rect{},
 	}
 }
@@ -42,8 +42,8 @@ func (s *sizeable) DrawArea() *sdl.Rect {
 	return s.drawArea
 }
 
-func (s *sizeable) SetBorder(m Margin) {
-	s.border = m
+func (s *sizeable) SetBorder(b *Border) {
+	s.border = b
 	s.Layout()
 }
 
@@ -61,7 +61,7 @@ func (s *sizeable) SetBounds(x, y, w, h int32) {
 }
 
 type sizeable struct {
-	border     Margin
+	border     *Border
 	bounds     *sdl.Rect
 	dimensions *sdl.Rect
 	drawArea   *sdl.Rect
@@ -69,28 +69,4 @@ type sizeable struct {
 
 type Layouter interface {
 	Layout(parent *Container)
-}
-
-// Margin is a set of margins: top, right, bottom, and left
-type Margin struct {
-	top, right, bottom, left int32
-}
-
-// Empty returns true if all Margins are set to zero.
-func (m Margin) Empty() bool {
-	return m.top == 0 || m.right == 0 || m.bottom == 0 || m.left == 0
-}
-
-// Reduce takes a rect and returns a rect with the Margins applied.
-func (m Margin) Reduce(input *sdl.Rect) *sdl.Rect {
-	if m.Empty() {
-		return input
-	}
-
-	return &sdl.Rect{
-		X: input.X + m.left,
-		Y: input.Y + m.top,
-		W: input.W - (m.left + m.right),
-		H: input.H - (m.top + m.bottom),
-	}
 }

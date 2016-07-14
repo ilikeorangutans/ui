@@ -14,7 +14,6 @@ func NewContainer() *Container {
 type Container struct {
 	EventHandlers
 	sizeable
-	border   *Border
 	children []Widget
 	layouter Layouter
 }
@@ -31,10 +30,6 @@ func (c *Container) Add(child Widget) {
 	c.children = append(c.children, child)
 }
 
-func (c *Container) SetBorder(border *Border) {
-	c.border = border
-}
-
 func (c *Container) Layout() {
 	c.layouter.Layout(c)
 	for i := range c.children {
@@ -43,6 +38,8 @@ func (c *Container) Layout() {
 }
 
 func (c *Container) Draw(renderer *sdl.Renderer) {
+	c.sizeable.border.Draw(renderer)
+
 	for i := range c.children {
 		child := c.children[i]
 		child.Draw(renderer)

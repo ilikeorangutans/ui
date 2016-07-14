@@ -21,7 +21,6 @@ func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 type Label struct {
 	sizeable
 	EventHandlers
-	border         *Border
 	text           string
 	font           *ttf.Font
 	updateTexture  bool
@@ -29,11 +28,6 @@ type Label struct {
 	color          sdl.Color
 	textDimensions *sdl.Rect
 	stretchToFill  bool
-}
-
-func (l *Label) SetBorder(border *Border) {
-	l.border = border
-	l.sizeable.SetBorder(border.Margin)
 }
 
 func (l *Label) SetText(text string) {
@@ -74,9 +68,7 @@ func (l *Label) Draw(renderer *sdl.Renderer) {
 		l.renderTexture(renderer)
 	}
 
-	if l.border != nil {
-		l.border.Draw(renderer)
-	}
+	l.border.Draw(renderer)
 
 	var boundsToUse *sdl.Rect
 	if l.stretchToFill {

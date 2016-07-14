@@ -51,7 +51,7 @@ func main() {
 	label2 := ui.NewLabel("label two", font, sdl.Color{R: 255, G: 255, B: 0, A: 255})
 	label2.SetBorder(ui.NewBorder(35, sdl.Color{R: 255, A: 255}))
 	label3 := ui.NewLabel("label 3 this is awesome!!", font, sdl.Color{R: 255, G: 0, B: 255, A: 255})
-	label3.SetBorder(ui.NewBorder(15, sdl.Color{R: 80, B: 255, A: 255}))
+	label3.SetBorder(ui.NewBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
 
 	c := ui.NewContainer()
@@ -82,11 +82,17 @@ func main() {
 					log.Printf("[%d ms] mouse button %d state %d button %d", t.Timestamp, t.Button, t.State, t.Button)
 					event := ui.NewMouseClickEvent(t.Timestamp)
 					w := findComponentUnder(c, t.X, t.Y)
+					for i := range w {
+						b := w[i].Bounds()
+						log.Printf("Found comp %d at %d,%d %dx%d\n", i, b.X, b.Y, b.W, b.H)
+					}
 					w.Notify(event)
 				}
 
 			case *sdl.MouseWheelEvent:
 				log.Printf("[%d ms] mouse wheel x %d y %d", t.Timestamp, t.X, t.Y)
+			case *sdl.MouseMotionEvent:
+				label2.SetText(fmt.Sprintf("Mouse @%d/%d", t.X, t.Y))
 
 			case *sdl.WindowEvent:
 				switch t.Event {
