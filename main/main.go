@@ -45,6 +45,8 @@ func main() {
 	}
 	defer renderer.Destroy()
 
+	counter := 0
+
 	label := ui.NewLabel("horray", font, sdl.Color{R: 255, G: 255, B: 255, A: 255})
 	label.SetBorder(ui.NewBorder(10, sdl.Color{G: 255, A: 255}))
 	label.Dimensions().W = 200
@@ -53,13 +55,18 @@ func main() {
 	label3 := ui.NewLabel("label 3 this is awesome!!", font, sdl.Color{R: 255, G: 0, B: 255, A: 255})
 	label3.SetBorder(ui.NewBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
+	button := ui.NewButton("I'm a button!", font)
+	button.AddEventHandler(ui.ButtonClicked, func(e ui.Event) {
+		counter++
+		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))
+	})
 
 	c := ui.NewContainer()
 	c.SetBounds(0, 0, 800, 200)
 	c.Add(label)
 	c.Add(label2)
 	c.Add(label3)
-	c.Add(ui.NewButton("I'm a button!", font))
+	c.Add(button)
 	running := true
 	var event sdl.Event
 	for running {
@@ -81,8 +88,6 @@ func main() {
 				event := ui.NewMouseClickEventFromSdlEvent(t)
 				w := findComponentUnder(c, t.X, t.Y)
 				w.Notify(event)
-
-				label3.SetText(fmt.Sprintf("%s", event.Data))
 
 			case *sdl.MouseWheelEvent:
 				log.Printf("[%d ms] mouse wheel x %d y %d", t.Timestamp, t.X, t.Y)

@@ -4,9 +4,14 @@ import "fmt"
 
 // Event is a single event the ui framework is interested in. An Event has a timestamp (relative to app startup), a string Type, and a Data field with event specific payload.
 type Event struct {
+	// When the event occured
 	Timestamp uint32
-	Type      string
-	Data      interface{}
+	// Type of the event
+	Type string
+	// Widget that emitted this event. Might be nil.
+	Emitter Widget
+	// Event payload. Might be nil.
+	Data interface{}
 }
 
 func (e Event) String() string {

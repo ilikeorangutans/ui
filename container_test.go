@@ -14,7 +14,7 @@ func TestRegisterEventHandlers(t *testing.T) {
 
 	assert.Equal(t, 1, len(c.eventHandlers))
 
-	event := NewMouseClickEvent(123)
+	event := NewMouseClickEvent(123, LMB, ButtonDown, 10, 10)
 	c.OnEvent(event)
 
 	assert.True(t, called)

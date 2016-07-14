@@ -1,15 +1,18 @@
 # To Do
 
+[ ] allow label to specify text alignment
+[ ] add a button type
+[ ] button needs an internal state machine (default -> hover -> pushed -> clicked...)
+[ ] support for padding
 [ ] figure out how to deal with events
   [ ] need to build hierarchy from the outside (certain components have children but don't expose them)
   [ ] widgets somehow need to communicate that they are interested in certain events
 [ ] make (certain?) widgets focusable
-[ ] add a button type
-[ ] add support for padding/margins
 [ ] don't render widgets if bounds are 0
 
 # Done
 
+[x] add support for margins
 [x] move dimensions and bounds related code into reusable type
 [x] add border type
 
