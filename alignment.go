@@ -1,8 +1,27 @@
 package ui
 
-import "github.com/veandco/go-sdl2/sdl"
+import (
+	"fmt"
+
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 type HorizontalAlignment uint8
+
+func (a HorizontalAlignment) String() string {
+	switch a {
+	case FillHorizontal:
+		return "Fill"
+	case Left:
+		return "Left"
+	case Center:
+		return "Center"
+	case Right:
+		return "Right"
+	default:
+		panic("Unknown alignment")
+	}
+}
 
 const (
 	FillHorizontal HorizontalAlignment = iota
@@ -12,6 +31,21 @@ const (
 )
 
 type VerticalAlignment uint8
+
+func (a VerticalAlignment) String() string {
+	switch a {
+	case FillVertical:
+		return "Fill"
+	case Top:
+		return "Top"
+	case Middle:
+		return "Middle"
+	case Bottom:
+		return "Bottom"
+	default:
+		panic("Unknown alignment")
+	}
+}
 
 const (
 	FillVertical VerticalAlignment = iota
@@ -64,4 +98,8 @@ func (a Alignment) Fill(available *sdl.Rect, fill *sdl.Rect) *sdl.Rect {
 
 	result := &sdl.Rect{x, y, w, h}
 	return result
+}
+
+func (a Alignment) String() string {
+	return fmt.Sprintf("Alignment{%s|%s}", a.Vertical, a.Horizontal)
 }
