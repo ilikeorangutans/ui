@@ -1,15 +1,18 @@
 package ui
 
 import (
-	"log"
-
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/sdl_ttf"
 )
 
 func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 	return &Label{
-		sizeable:       newSizeable(),
+		sizeable: sizeable{
+			dimensions: &sdl.Rect{},
+			bounds:     &sdl.Rect{},
+			border:     EmptyBorder(),
+			alignment:  Alignment{Top, Left},
+		},
 		text:           text,
 		font:           font,
 		updateTexture:  true,
@@ -28,7 +31,6 @@ type Label struct {
 	texture        *sdl.Texture
 	color          sdl.Color
 	textDimensions *sdl.Rect
-	stretchToFill  bool
 }
 
 func (l *Label) SetText(text string) {
@@ -40,11 +42,9 @@ func (l *Label) SetText(text string) {
 	l.updateTexture = true
 }
 
-func (l *Label) SetBounds(x, y, w, h int32) {
-	l.sizeable.SetBounds(x, y, w, h)
-	l.textDimensions.X = l.drawArea.X
-	l.textDimensions.Y = l.drawArea.Y
-	l.border.SetBounds(l.bounds)
+func (l *Label) Layout() {
+	l.sizeable.Layout()
+	l.widgetArea = l.alignment.Fill(l.WidgetArea(), l.textDimensions)
 }
 
 func (l *Label) renderTexture(renderer *sdl.Renderer) {
@@ -66,25 +66,18 @@ func (l *Label) renderTexture(renderer *sdl.Renderer) {
 
 func (l *Label) Draw(renderer *sdl.Renderer) {
 	if l.updateTexture {
+		// TODO could this be deferred?
 		l.renderTexture(renderer)
 	}
 
 	l.border.Draw(renderer)
-
-	var boundsToUse *sdl.Rect
-	if l.stretchToFill {
-		boundsToUse = l.drawArea
-	} else {
-		boundsToUse = l.textDimensions
-	}
-
-	renderer.Copy(l.texture, nil, boundsToUse)
-}
-
-func (l *Label) OnMouseClick(e MouseClickEvent) {
-	log.Printf("Label.OnMouseClick() \n")
+	renderer.Copy(l.texture, nil, l.widgetArea)
 }
 
 func (l *Label) Visit(visitor WidgetVisitor) {
 	visitor.VisitWidget(l)
+}
+
+func (l *Label) Destroy() {
+	l.texture.Destroy()
 }

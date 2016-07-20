@@ -5,9 +5,14 @@ import "github.com/veandco/go-sdl2/sdl"
 func NewContainer() *Container {
 	return &Container{
 		sizeable: newSizeable(),
-		layouter: &HorizontalStackLayouter{
-			top: 3,
-		},
+		layouter: &HorizontalStackLayouter{},
+	}
+}
+
+func NewVerticalContainer() *Container {
+	return &Container{
+		sizeable: newSizeable(),
+		layouter: &VerticalStackLayouter{},
 	}
 }
 
@@ -26,8 +31,9 @@ func (c *Container) Children() []Widget {
 	return c.children
 }
 
-func (c *Container) Add(child Widget) {
+func (c *Container) Add(child Widget) Widget {
 	c.children = append(c.children, child)
+	return child
 }
 
 func (c *Container) Layout() {
@@ -50,5 +56,11 @@ func (c *Container) Visit(visitor WidgetVisitor) {
 	visitNext := visitor.VisitContainer(c)
 	for i := range visitNext {
 		visitNext[i].Visit(visitor)
+	}
+}
+
+func (c *Container) Destroy() {
+	for i := range c.children {
+		c.children[i].Destroy()
 	}
 }

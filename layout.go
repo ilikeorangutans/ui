@@ -7,7 +7,7 @@ func newSizeable() sizeable {
 		dimensions: &sdl.Rect{},
 		bounds:     &sdl.Rect{},
 		border:     EmptyBorder(),
-		drawArea:   &sdl.Rect{},
+		widgetArea: &sdl.Rect{},
 	}
 }
 
@@ -21,8 +21,8 @@ func newSizeableWithDimensions(w, h int32) sizeable {
 			W: w,
 			H: h,
 		},
-		border:   EmptyBorder(),
-		drawArea: &sdl.Rect{},
+		border:     EmptyBorder(),
+		widgetArea: &sdl.Rect{},
 	}
 }
 
@@ -37,18 +37,32 @@ func (s *sizeable) Bounds() *sdl.Rect {
 }
 
 // DrawArea returns the area in which the widget is to be drawn, i.e.
-// bounds, as assigned by the layouter, minus the border
-func (s *sizeable) DrawArea() *sdl.Rect {
-	return s.drawArea
+// bounds, as assigned by the layouter, minus all margins
+func (s *sizeable) WidgetArea() *sdl.Rect {
+	return s.widgetArea
+}
+
+func (s *sizeable) SetMargin(m Margin) {
+	s.margin = m
+	s.layoutChanged = true
+}
+
+func (s *sizeable) SetPadding(m Margin) {
+	s.padding = m
+	s.layoutChanged = true
+}
+
+func (s *sizeable) PaddingArea() *sdl.Rect {
+	return s.paddingArea
 }
 
 func (s *sizeable) SetBorder(b *Border) {
 	s.border = b
-	s.Layout()
+	s.layoutChanged = true
 }
 
-func (s *sizeable) Layout() {
-	s.drawArea = s.border.Reduce(s.bounds)
+func (s *sizeable) BorderArea() *sdl.Rect {
+	return s.borderArea
 }
 
 func (s *sizeable) SetBounds(x, y, w, h int32) {
@@ -56,15 +70,49 @@ func (s *sizeable) SetBounds(x, y, w, h int32) {
 	s.bounds.Y = y
 	s.bounds.W = w
 	s.bounds.H = h
-
-	s.Layout()
+	s.layoutChanged = true
 }
 
+func (s *sizeable) Layout() {
+	if !s.layoutChanged {
+		return
+	}
+	s.layoutChanged = false
+
+	s.borderArea = s.margin.Reduce(s.bounds)
+	s.border.SetBounds(s.borderArea)
+	s.paddingArea = s.border.Reduce(s.borderArea)
+	s.widgetArea = s.alignment.Fill(s.padding.Reduce(s.paddingArea), s.dimensions)
+}
+
+func (s *sizeable) SetAlignment(a Alignment) {
+	s.alignment = a
+}
+
+func (s *sizeable) Destroy() {
+}
+
+// sizeable is the base type for layouting widgets. A sizeable widget consists of
+// several layered elements. From the outside to the inside:
+// - border: rendererd outside of everything
+// - padding: blank space inside of the border
+// - widget: the actual widget to be rendered
+// For each of these elements there's a corresponding area that sizeable will
+// keep up to date based on the bounds set on the widget:
+// - BorderArea
+// - PaddingArea
+// - WidgetArea
 type sizeable struct {
-	border     *Border
-	bounds     *sdl.Rect
-	dimensions *sdl.Rect
-	drawArea   *sdl.Rect
+	alignment     Alignment
+	border        *Border
+	borderArea    *sdl.Rect
+	padding       Margin
+	paddingArea   *sdl.Rect
+	margin        Margin
+	bounds        *sdl.Rect
+	dimensions    *sdl.Rect
+	widgetArea    *sdl.Rect
+	layoutChanged bool
 }
 
 type Layouter interface {

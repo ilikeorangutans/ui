@@ -19,6 +19,7 @@ func NewButton(text string, font *ttf.Font) *Button {
 	border := NewBorder(2, sdl.Color{})
 	border.style = RaisedBorderStyle{}
 	b.SetBorder(border)
+	b.Label.SetAlignment(Alignment{Middle, Center})
 
 	b.AddEventHandler("MouseClickEvent", b.OnMouseClick)
 

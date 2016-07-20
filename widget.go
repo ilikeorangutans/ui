@@ -8,7 +8,8 @@ type Widget interface {
 	Draw(renderer *sdl.Renderer)
 	Layout()
 	OnEvent(event Event)
+	SetBorder(border *Border)
 	SetBounds(x, y, w, h int32)
 	Visit(WidgetVisitor)
-	SetBorder(border *Border)
+	Destroy()
 }

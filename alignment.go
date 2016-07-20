@@ -56,8 +56,8 @@ const (
 
 // Alignment defines how content is laid out within its parent.
 type Alignment struct {
-	Horizontal HorizontalAlignment
 	Vertical   VerticalAlignment
+	Horizontal HorizontalAlignment
 }
 
 func (a Alignment) Fill(available *sdl.Rect, fill *sdl.Rect) *sdl.Rect {

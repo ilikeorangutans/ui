@@ -1,7 +1,6 @@
 # To Do
 
 [ ] allow label to specify text alignment
-[ ] add a button type
 [ ] button needs an internal state machine (default -> hover -> pushed -> clicked...)
 [ ] support for padding
 [ ] figure out how to deal with events
@@ -12,6 +11,7 @@
 
 # Done
 
+[x] add a button type
 [x] add support for margins
 [x] move dimensions and bounds related code into reusable type
 [x] add border type

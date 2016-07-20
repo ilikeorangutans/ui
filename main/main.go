@@ -50,16 +50,20 @@ func main() {
 	label := ui.NewLabel("horray", font, sdl.Color{R: 255, G: 255, B: 255, A: 255})
 	label.SetBorder(ui.NewBorder(10, sdl.Color{G: 255, A: 255}))
 	label.Dimensions().W = 200
+	label.SetAlignment(ui.Alignment{ui.Middle, ui.Center})
+
 	label2 := ui.NewLabel("label two", font, sdl.Color{R: 255, G: 255, B: 0, A: 255})
 	label2.SetBorder(ui.NewBorder(35, sdl.Color{R: 255, A: 255}))
 	label3 := ui.NewLabel("label 3 this is awesome!!", font, sdl.Color{R: 255, G: 0, B: 255, A: 255})
 	label3.SetBorder(ui.NewBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
+	label3.SetAlignment(ui.Alignment{ui.Bottom, ui.Right})
 	button := ui.NewButton("I'm a button!", font)
 	button.AddEventHandler(ui.ButtonClicked, func(e ui.Event) {
 		counter++
 		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))
 	})
+	button.SetMargin(ui.Margin{3, 3, 3, 3})
 
 	c := ui.NewContainer()
 	c.SetBounds(0, 0, 800, 200)
@@ -97,9 +101,9 @@ func main() {
 			case *sdl.WindowEvent:
 				switch t.Event {
 				case sdl.WINDOWEVENT_RESIZED:
-					c.SetBounds(0, 0, t.Data1, t.Data2)
+					c.SetBounds(0, 0, t.Data1, 200)
 				case sdl.WINDOWEVENT_SIZE_CHANGED:
-					c.SetBounds(0, 0, t.Data1, t.Data2)
+					c.SetBounds(0, 0, t.Data1, 200)
 				}
 			}
 		}
@@ -114,6 +118,8 @@ func main() {
 		renderer.Present()
 		sdl.Delay(33)
 	}
+
+	c.Destroy()
 }
 
 func findComponentUnder(root *ui.Container, x, y int32) ui.WidgetStack {

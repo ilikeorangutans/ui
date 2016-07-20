@@ -1,24 +1,26 @@
 package ui
 
-import "github.com/veandco/go-sdl2/sdl"
-
 type VerticalStackLayouter struct {
 	y                        int
 	top, left, right, bottom int
 }
 
-func (l *VerticalStackLayouter) Layout(parent *sdl.Rect, c Widget) {
-	l.y += l.top
-	dimensions := c.Dimensions()
-	c.Bounds().Y = int32(l.y)
-	c.Bounds().X = parent.X
-	c.Bounds().W = dimensions.W
-	c.Bounds().H = dimensions.H
+func (l *VerticalStackLayouter) Layout(c *Container) {
+	desiredHeights := make([]int32, len(c.Children()))
 
-	l.y += int(c.Dimensions().H)
-	l.y += l.bottom
-}
+	for i := range c.Children() {
+		child := c.Get(i)
+		desiredHeights[i] = child.Dimensions().H
+	}
 
-func (l *VerticalStackLayouter) Reset() {
-	l.y = 0
+	heights := distributeSizes(c.Bounds().H, desiredHeights)
+
+	x := c.Bounds().X
+	y := c.Bounds().Y
+	for i := range heights {
+		child := c.Get(i)
+		widths := distributeSizes(c.Bounds().W, []int32{child.Dimensions().W})
+		child.SetBounds(x, y, widths[0], heights[i])
+		y += heights[i]
+	}
 }
