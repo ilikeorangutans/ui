@@ -63,14 +63,20 @@ func main() {
 		counter++
 		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))
 	})
+	button.SetDimensions(200, 49)
 	button.SetMargin(ui.Margin{3, 3, 3, 3})
 
+	v := ui.NewVerticalContainer()
+	v.SetBounds(0, 0, 800, 600)
 	c := ui.NewContainer()
-	c.SetBounds(0, 0, 800, 200)
+	c.SetDimensions(0, 200)
 	c.Add(label)
 	c.Add(label2)
 	c.Add(label3)
 	c.Add(button)
+
+	v.Add(c)
+
 	running := true
 	var event sdl.Event
 	for running {
@@ -101,19 +107,21 @@ func main() {
 			case *sdl.WindowEvent:
 				switch t.Event {
 				case sdl.WINDOWEVENT_RESIZED:
-					c.SetBounds(0, 0, t.Data1, 200)
+					v.SetBounds(0, 0, t.Data1, t.Data2)
 				case sdl.WINDOWEVENT_SIZE_CHANGED:
-					c.SetBounds(0, 0, t.Data1, 200)
+					v.SetBounds(0, 0, t.Data1, t.Data2)
 				}
 			}
 		}
 
-		c.Layout()
+		v.Layout()
+
+		label3.SetText(fmt.Sprintf("c: %v", c.Bounds()))
 
 		renderer.SetDrawColor(0, 0, 0, 0)
 		renderer.Clear()
 
-		c.Draw(renderer)
+		v.Draw(renderer)
 
 		renderer.Present()
 		sdl.Delay(33)

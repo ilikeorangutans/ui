@@ -7,6 +7,14 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
+func TestSizeableSetsBoundsOnLayoutIfOnlyDimensionsAreSet(t *testing.T) {
+	s := newSizeable()
+	s.SetDimensions(200, 100)
+	s.Layout()
+
+	assert.Equal(t, &sdl.Rect{0, 0, 200, 100}, s.Bounds())
+}
+
 func TestNewSizeableWithDimensions(t *testing.T) {
 	s := newSizeableWithDimensions(200, 100)
 	s.SetBounds(0, 0, 200, 100)

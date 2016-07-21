@@ -37,6 +37,7 @@ func (c *Container) Add(child Widget) Widget {
 }
 
 func (c *Container) Layout() {
+	c.sizeable.Layout()
 	c.layouter.Layout(c)
 	for i := range c.children {
 		c.children[i].Layout()
