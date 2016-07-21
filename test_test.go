@@ -35,3 +35,11 @@ func loadFont() *ttf.Font {
 
 	return font
 }
+
+type TestWidget struct {
+	sizeable
+	EventHandlers
+}
+
+func (w *TestWidget) Draw(renderer *sdl.Renderer) {}
+func (w *TestWidget) Visit(v WidgetVisitor)       {}

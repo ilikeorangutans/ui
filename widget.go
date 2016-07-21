@@ -7,7 +7,7 @@ type Widget interface {
 	Dimensions() *sdl.Rect
 	Draw(renderer *sdl.Renderer)
 	Layout()
-	OnEvent(event Event)
+	OnEvent(event *Event)
 	SetBorder(border *Border)
 	SetBounds(x, y, w, h int32)
 	Visit(WidgetVisitor)

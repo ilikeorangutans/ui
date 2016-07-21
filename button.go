@@ -36,10 +36,10 @@ func (b *Button) Draw(renderer *sdl.Renderer) {
 	b.Label.Draw(renderer)
 }
 
-func (b *Button) OnMouseClick(e Event) {
+func (b *Button) OnMouseClick(e *Event) bool {
 	mouseClick := e.Data.(MouseClickEvent)
 	if mouseClick.Button != LMB {
-		return
+		return false
 	}
 
 	if mouseClick.State == ButtonDown {
@@ -47,7 +47,7 @@ func (b *Button) OnMouseClick(e Event) {
 	} else if mouseClick.State == ButtonUp {
 		b.border.style = RaisedBorderStyle{}
 
-		buttonEvent := Event{
+		buttonEvent := &Event{
 			Timestamp: e.Timestamp,
 			Type:      ButtonClicked,
 			Emitter:   b,
@@ -55,6 +55,7 @@ func (b *Button) OnMouseClick(e Event) {
 		}
 		b.OnEvent(buttonEvent)
 	}
+	return true
 }
 
 type ButtonClickEvent struct{}

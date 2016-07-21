@@ -35,12 +35,12 @@ const (
 	ButtonDown
 )
 
-func NewMouseClickEventFromSdlEvent(e *sdl.MouseButtonEvent) Event {
+func NewMouseClickEventFromSdlEvent(e *sdl.MouseButtonEvent) *Event {
 	return NewMouseClickEvent(e.Timestamp, MouseButton(e.Button), MouseButtonState(e.State), e.X, e.Y)
 }
 
-func NewMouseClickEvent(timestamp uint32, button MouseButton, state MouseButtonState, X, Y int32) Event {
-	return Event{
+func NewMouseClickEvent(timestamp uint32, button MouseButton, state MouseButtonState, X, Y int32) *Event {
+	return &Event{
 		Timestamp: timestamp,
 		Type:      "MouseClickEvent",
 		Data: MouseClickEvent{

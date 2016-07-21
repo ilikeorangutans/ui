@@ -1,7 +1,6 @@
 package ui
 
 import (
-	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -12,7 +11,10 @@ func TestRegisterEventHandlers(t *testing.T) {
 	c := NewContainer()
 
 	called := false
-	c.AddEventHandler("MouseClickEvent", func(e Event) { called = true })
+	c.AddEventHandler("MouseClickEvent", func(e *Event) bool {
+		called = true
+		return true
+	})
 
 	assert.Equal(t, 1, len(c.eventHandlers))
 
@@ -23,7 +25,6 @@ func TestRegisterEventHandlers(t *testing.T) {
 }
 
 func TestNestedContainerLayoutChildren(t *testing.T) {
-	log.Printf("XXX")
 	parent := NewContainer()
 	parent.SetDimensions(200, 100)
 	//parent.SetBounds(0, 0, 200, 100)

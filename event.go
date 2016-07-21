@@ -12,13 +12,17 @@ type Event struct {
 	Emitter Widget
 	// Event payload. Might be nil.
 	Data interface{}
+	// Flag if the event has been handled yet
+	Handled bool
 }
 
 func (e Event) String() string {
 	return fmt.Sprintf("[%dms] %s", e.Timestamp, e.Type)
 }
 
-type EventHandlerFunc func(event Event)
+// EventHandlerFunc is the interface for event handling functions. They take an event
+// as parameter and return true if they handled the event.
+type EventHandlerFunc func(event *Event) bool
 
 type EventHandlers struct {
 	eventHandlers map[string][]EventHandlerFunc
@@ -31,7 +35,7 @@ func (h *EventHandlers) AddEventHandler(t string, handler EventHandlerFunc) {
 	h.eventHandlers[t] = append(h.eventHandlers[t], handler)
 }
 
-func (h *EventHandlers) OnEvent(event Event) {
+func (h *EventHandlers) OnEvent(event *Event) {
 	if h.eventHandlers == nil || len(h.eventHandlers) == 0 {
 		return
 	}
@@ -42,6 +46,9 @@ func (h *EventHandlers) OnEvent(event Event) {
 	}
 
 	for i := range handlers {
-		handlers[i](event)
+		if handlers[i](event) {
+			event.Handled = true
+			break
+		}
 	}
 }
