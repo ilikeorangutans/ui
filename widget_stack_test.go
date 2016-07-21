@@ -24,4 +24,5 @@ func TestNotifyStopsWhenEventIsHandled(t *testing.T) {
 	ws = append(ws, topOfStack)
 
 	ws.Notify(&Event{Type: "test"})
+	assert.True(t, handled)
 }

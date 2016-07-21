@@ -46,31 +46,24 @@ func NewMouseClickEvent(timestamp uint32, button MouseButton, state MouseButtonS
 		Data: MouseClickEvent{
 			Button: button,
 			State:  state,
-			X:      X,
-			Y:      Y,
+			Point: sdl.Point{
+				X: X,
+				Y: Y,
+			},
 		},
 	}
 }
 
+type MouseOverEvent struct {
+	sdl.Point
+}
+
 type MouseClickEvent struct {
+	sdl.Point
 	Button MouseButton
 	State  MouseButtonState
-	X, Y   int32
 }
 
 func (m MouseClickEvent) String() string {
 	return fmt.Sprintf("MouseClickEvent{X: %d, Y: %d, Button: %s, State: %d}", m.X, m.Y, m.Button, m.State)
-}
-
-type MouseClickHandler interface {
-	OnMouseClick(e MouseClickEvent)
-}
-
-func (e MouseClickEvent) Notify(w Widget) {
-	t, ok := w.(MouseClickHandler)
-	if !ok {
-		return
-	}
-
-	t.OnMouseClick(e)
 }

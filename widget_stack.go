@@ -15,3 +15,12 @@ func (s WidgetStack) Notify(event *Event) {
 		}
 	}
 }
+
+// Top returns the widget at the top of the stack or nil if the stack is empty
+func (s WidgetStack) Top() Widget {
+	if len(s) == 0 {
+		return nil
+	}
+
+	return s[len(s)-1]
+}

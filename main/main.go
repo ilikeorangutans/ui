@@ -58,6 +58,16 @@ func main() {
 	label3.SetBorder(ui.NewBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
 	label3.SetAlignment(ui.Alignment{ui.Bottom, ui.Right})
+
+	label3.AddEventHandler("MouseOver", func(e *ui.Event) bool {
+		log.Printf("Got mouse over event")
+		return true
+	})
+	label3.AddEventHandler("MouseOut", func(e *ui.Event) bool {
+		log.Printf("Got mouse out event")
+		return true
+	})
+
 	button := ui.NewButton("I'm a button!", font)
 	button.AddEventHandler(ui.ButtonClicked, func(e *ui.Event) bool {
 		counter++
@@ -78,6 +88,10 @@ func main() {
 
 	v.Add(c)
 
+	sdlEventHandler := &ui.SDLEventHandler{
+		Root: v,
+	}
+
 	running := true
 	var event sdl.Event
 	for running {
@@ -95,24 +109,8 @@ func main() {
 				s := fmt.Sprintf("sym:%c", t.Keysym.Sym)
 				label.SetText(s)
 
-			case *sdl.MouseButtonEvent:
-				event := ui.NewMouseClickEventFromSdlEvent(t)
-				w := findComponentUnder(c, t.X, t.Y)
-				w.Notify(event)
-
-			case *sdl.MouseWheelEvent:
-				log.Printf("[%d ms] mouse wheel x %d y %d", t.Timestamp, t.X, t.Y)
-			case *sdl.MouseMotionEvent:
-				label2.SetText(fmt.Sprintf("Mouse @%d/%d", t.X, t.Y))
-
-			case *sdl.WindowEvent:
-				switch t.Event {
-				case sdl.WINDOWEVENT_RESIZED:
-					v.SetBounds(0, 0, t.Data1, t.Data2)
-				case sdl.WINDOWEVENT_SIZE_CHANGED:
-					v.SetBounds(0, 0, t.Data1, t.Data2)
-				}
 			}
+			sdlEventHandler.Handle(event)
 		}
 
 		v.Layout()
@@ -129,13 +127,4 @@ func main() {
 	}
 
 	c.Destroy()
-}
-
-func findComponentUnder(root *ui.Container, x, y int32) ui.WidgetStack {
-	f := &ui.LocatingFinder{
-		X: x,
-		Y: y,
-	}
-	root.Visit(f)
-	return f.Stack
 }

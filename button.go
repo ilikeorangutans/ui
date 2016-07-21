@@ -22,6 +22,8 @@ func NewButton(text string, font *ttf.Font) *Button {
 	b.Label.SetAlignment(Alignment{Middle, Center})
 
 	b.AddEventHandler("MouseClickEvent", b.OnMouseClick)
+	b.AddEventHandler("MouseOver", b.OnMouseOver)
+	b.AddEventHandler("MouseOut", b.OnMouseOut)
 
 	return b
 }
@@ -56,6 +58,14 @@ func (b *Button) OnMouseClick(e *Event) bool {
 		b.OnEvent(buttonEvent)
 	}
 	return true
+}
+
+func (b *Button) OnMouseOver(e *Event) bool {
+	return false
+}
+
+func (b *Button) OnMouseOut(e *Event) bool {
+	return false
 }
 
 type ButtonClickEvent struct{}
