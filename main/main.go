@@ -59,9 +59,10 @@ func main() {
 	label3.Dimensions().W = 300
 	label3.SetAlignment(ui.Alignment{ui.Bottom, ui.Right})
 	button := ui.NewButton("I'm a button!", font)
-	button.AddEventHandler(ui.ButtonClicked, func(e ui.Event) {
+	button.AddEventHandler(ui.ButtonClicked, func(e *ui.Event) bool {
 		counter++
 		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))
+		return true
 	})
 	button.SetDimensions(200, 49)
 	button.SetMargin(ui.Margin{3, 3, 3, 3})
