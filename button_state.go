@@ -180,7 +180,15 @@ func (s *ToggleButtonHoverState) OnMouseClick(e *Event) bool {
 			Pushed: true,
 		},
 	})
+
 	s.Button.transition("pushhover")
+	event := &Event{
+		Timestamp: e.Timestamp,
+		Type:      ButtonToggled,
+		Emitter:   s.Button,
+		Data:      ButtonToggleEvent{true},
+	}
+	s.Button.OnEvent(event)
 	return true
 }
 
@@ -227,5 +235,12 @@ func (s *ToggleButtonPushedHoverState) OnMouseClick(e *Event) bool {
 		},
 	})
 	s.Button.transition("hover")
+	event := &Event{
+		Timestamp: e.Timestamp,
+		Type:      ButtonToggled,
+		Emitter:   s.Button,
+		Data:      ButtonToggleEvent{false},
+	}
+	s.Button.OnEvent(event)
 	return true
 }
