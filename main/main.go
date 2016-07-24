@@ -58,6 +58,7 @@ func main() {
 	label3.SetBorder(ui.NewBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
 	label3.SetAlignment(ui.Alignment{ui.Bottom, ui.Right})
+	label3.SetPadding(ui.Margin{11, 11, 11, 11})
 
 	label3.AddEventHandler("MouseOver", func(e *ui.Event) bool {
 		log.Printf("Got mouse over event")
@@ -68,6 +69,7 @@ func main() {
 		return true
 	})
 
+	buttonContainer := ui.NewVerticalContainer()
 	button := ui.NewClickButton("I'm a button!", font)
 	button.AddEventHandler(ui.ButtonClicked, func(e *ui.Event) bool {
 		counter++
@@ -75,7 +77,13 @@ func main() {
 		return true
 	})
 	button.SetDimensions(200, 49)
-	button.SetMargin(ui.Margin{3, 3, 3, 3})
+	button.SetMargin(ui.Margin{3, 3, 0, 3})
+	buttonContainer.Add(button)
+
+	toggle := ui.NewToggleButton("Toggle me!", font)
+	toggle.SetDimensions(200, 49)
+	toggle.SetMargin(ui.Margin{3, 3, 0, 3})
+	buttonContainer.Add(toggle)
 
 	v := ui.NewVerticalContainer()
 	v.SetBounds(0, 0, 800, 600)
@@ -84,7 +92,7 @@ func main() {
 	c.Add(label)
 	c.Add(label2)
 	c.Add(label3)
-	c.Add(button)
+	c.Add(buttonContainer)
 
 	v.Add(c)
 

@@ -1,5 +1,7 @@
 package ui
 
+import "time"
+
 // ButtonState represents the different states a button can be in.
 type ButtonState interface {
 	Begin()
@@ -104,6 +106,7 @@ func (s *ClickButtonPushState) OnMouseOut(e *Event) bool {
 	return false
 }
 
+// ClickButtonClickState is the short transient state a button is in when it has been clicked.
 type ClickButtonClickState struct {
 	EmptyButtonState
 }
@@ -115,7 +118,7 @@ func (s *ClickButtonClickState) String() string {
 func (s *ClickButtonClickState) Begin() {
 	// TODO set highlight active state
 	event := &Event{
-		Timestamp: 0,
+		Timestamp: uint32(time.Now().UnixNano()),
 		Type:      ButtonClicked,
 		Emitter:   s.Button,
 		Data:      ButtonClickEvent{},
@@ -125,4 +128,80 @@ func (s *ClickButtonClickState) Begin() {
 
 func (s *ClickButtonClickState) Tick() {
 	s.Button.transition("hover")
+}
+
+type ToggleButtonDefaultState struct {
+	EmptyButtonState
+}
+
+func (s *ToggleButtonDefaultState) Begin() {
+	s.Button.border.Style = RaisedBorderStyle{}
+}
+
+func (s *ToggleButtonDefaultState) OnMouseOver(e *Event) bool {
+	s.Button.transition("hover")
+	return false
+}
+
+type ToggleButtonHoverState struct {
+	EmptyButtonState
+}
+
+func (s *ToggleButtonHoverState) Begin() {
+	s.Button.border.Style = RaisedBorderStyle{}
+}
+
+func (s *ToggleButtonHoverState) OnMouseOut(e *Event) bool {
+	s.Button.transition("default")
+	return false
+}
+
+func (s *ToggleButtonHoverState) OnMouseClick(e *Event) bool {
+	data := e.Data.(MouseClickEvent)
+	if data.Button != LMB || data.State != ButtonDown {
+		return false
+	}
+
+	// TODO emit pushed event
+	s.Button.transition("pushhover")
+	return true
+}
+
+//
+type ToggleButtonPushedState struct {
+	EmptyButtonState
+}
+
+func (s *ToggleButtonPushedState) Begin() {
+	s.Button.border.Style = &LoweredBorderStyle{}
+}
+
+func (s *ToggleButtonPushedState) OnMouseOver(e *Event) bool {
+	s.Button.transition("pushhover")
+	return false
+}
+
+//
+type ToggleButtonPushedHoverState struct {
+	EmptyButtonState
+}
+
+func (s *ToggleButtonPushedHoverState) Begin() {
+	s.Button.border.Style = &LoweredBorderStyle{}
+}
+
+func (s *ToggleButtonPushedHoverState) OnMouseOut(e *Event) bool {
+	s.Button.transition("push")
+	return false
+}
+
+func (s *ToggleButtonPushedHoverState) OnMouseClick(e *Event) bool {
+	data := e.Data.(MouseClickEvent)
+	if data.Button != LMB || data.State != ButtonDown {
+		return false
+	}
+
+	// TODO emit unpushed event
+	s.Button.transition("hover")
+	return true
 }
