@@ -14,18 +14,16 @@ func EmptyBorder() *Border {
 func NewBorder(width int32, color sdl.Color) *Border {
 	return &Border{
 		Margin: Margin{width, width, width, width},
+		Style:  FlatBorderStyle{},
 		color:  color,
-		style:  FlatBorderStyle{},
 	}
 }
 
 type Border struct {
 	Margin
+	Style  BorderStyle
 	bounds *sdl.Rect
 	color  sdl.Color
-	style  interface {
-		Draw(*sdl.Renderer, *Border)
-	}
 }
 
 func (b *Border) SetBounds(bounds *sdl.Rect) {
@@ -40,7 +38,11 @@ func (b *Border) Draw(renderer *sdl.Renderer) {
 		return
 	}
 
-	b.style.Draw(renderer, b)
+	b.Style.Draw(renderer, b)
+}
+
+type BorderStyle interface {
+	Draw(*sdl.Renderer, *Border)
 }
 
 // FlatBorderStyle draws a flat colored border

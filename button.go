@@ -11,13 +11,28 @@ const (
 )
 
 // NewButton creates a new button with the given text as label.
-func NewButton(text string, font *ttf.Font) *Button {
+func NewClickButton(text string, font *ttf.Font) *Button {
+	b := newButton(text, font)
+
+	states := make(map[string]ButtonState)
+	states["default"] = &ClickButtonDefaultState{EmptyButtonState: EmptyButtonState{Button: b}}
+	states["hover"] = &ClickButtonHoverState{EmptyButtonState: EmptyButtonState{Button: b}}
+	states["push"] = &ClickButtonPushState{EmptyButtonState: EmptyButtonState{Button: b}}
+	states["click"] = &ClickButtonClickState{EmptyButtonState: EmptyButtonState{Button: b}}
+	b.states = states
+
+	b.transition("default")
+
+	return b
+}
+
+func newButton(text string, font *ttf.Font) *Button {
 	b := &Button{
 		Label: NewLabel(text, font, sdl.Color{}),
 	}
 
 	border := NewBorder(2, sdl.Color{})
-	border.style = RaisedBorderStyle{}
+	border.Style = RaisedBorderStyle{}
 	b.SetBorder(border)
 	b.Label.SetAlignment(Alignment{Middle, Center})
 
@@ -31,41 +46,34 @@ func NewButton(text string, font *ttf.Font) *Button {
 // A clickable button.
 type Button struct {
 	*Label
+	state  ButtonState
+	states map[string]ButtonState
+}
+
+func (b *Button) transition(name string) {
+	if b.state != nil {
+		b.state.End()
+	}
+	b.state = b.states[name]
+	b.state.Begin()
 }
 
 func (b *Button) Draw(renderer *sdl.Renderer) {
+	b.state.Tick()
 	b.border.Draw(renderer)
 	b.Label.Draw(renderer)
 }
 
 func (b *Button) OnMouseClick(e *Event) bool {
-	mouseClick := e.Data.(MouseClickEvent)
-	if mouseClick.Button != LMB {
-		return false
-	}
-
-	if mouseClick.State == ButtonDown {
-		b.border.style = LoweredBorderStyle{}
-	} else if mouseClick.State == ButtonUp {
-		b.border.style = RaisedBorderStyle{}
-
-		buttonEvent := &Event{
-			Timestamp: e.Timestamp,
-			Type:      ButtonClicked,
-			Emitter:   b,
-			Data:      ButtonClickEvent{},
-		}
-		b.OnEvent(buttonEvent)
-	}
-	return true
+	return b.state.OnMouseClick(e)
 }
 
 func (b *Button) OnMouseOver(e *Event) bool {
-	return false
+	return b.state.OnMouseOver(e)
 }
 
 func (b *Button) OnMouseOut(e *Event) bool {
-	return false
+	return b.state.OnMouseOut(e)
 }
 
 type ButtonClickEvent struct{}

@@ -68,7 +68,7 @@ func main() {
 		return true
 	})
 
-	button := ui.NewButton("I'm a button!", font)
+	button := ui.NewClickButton("I'm a button!", font)
 	button.AddEventHandler(ui.ButtonClicked, func(e *ui.Event) bool {
 		counter++
 		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))

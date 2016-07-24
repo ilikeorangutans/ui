@@ -7,7 +7,7 @@ import (
 )
 
 func TestButtonEmitsButtonClickedEvent(t *testing.T) {
-	b := NewButton("button", font)
+	b := NewClickButton("button", font)
 	clicked := false
 	b.AddEventHandler(ButtonClicked, func(e *Event) bool {
 		assert.Equal(t, ButtonClicked, e.Type)
