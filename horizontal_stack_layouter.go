@@ -13,13 +13,13 @@ func (l *HorizontalStackLayouter) Layout(parent *Container) {
 		desiredWidths[i] = child.Dimensions().W
 	}
 
-	widths := distributeSizes(parent.Bounds().W, desiredWidths)
+	widths := distributeSizes(parent.WidgetArea().W, desiredWidths)
 
-	x := parent.Bounds().X
-	y := parent.Bounds().Y
+	x := parent.WidgetArea().X
+	y := parent.WidgetArea().Y
 	for i := range widths {
 		child := parent.Get(i)
-		heights := distributeSizes(parent.Bounds().H, []int32{child.Dimensions().H})
+		heights := distributeSizes(parent.WidgetArea().H, []int32{child.Dimensions().H})
 		child.SetBounds(x, y, widths[i], heights[0])
 		x += widths[i]
 	}

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/veandco/go-sdl2/sdl"
 )
 
 func TestHorizontalStackLayouterChildFillsFullWidth(t *testing.T) {
@@ -21,9 +22,9 @@ func TestHorizontalStackLayouterChildFillsFullWidth(t *testing.T) {
 
 func TestHorizontalStackLayouterChildrenFillFullWidth(t *testing.T) {
 	c := NewContainer()
-	c.Bounds().W = 800
-	c.Bounds().H = 200
-	c.Bounds().Y = 100
+	c.WidgetArea().W = 800
+	c.WidgetArea().H = 200
+	c.WidgetArea().Y = 100
 	w := NewSpacer(0, 300)
 	w2 := NewSpacer(0, 0)
 	c.Add(w)
@@ -44,7 +45,7 @@ func TestHorizontalStackLayouterChildrenFillFullWidth(t *testing.T) {
 func TestHorizontalStackLayouterWithFixedWithChild(t *testing.T) {
 	c := NewContainer()
 	c.Dimensions().W = 800
-	c.Bounds().W = 800
+	c.WidgetArea().W = 800
 	w := NewSpacer(200, 0)
 	w2 := NewSpacer(0, 0)
 	c.Add(w)
@@ -59,7 +60,7 @@ func TestHorizontalStackLayouterWithFixedWithChild(t *testing.T) {
 
 func TestHorizontalStackLayouterSetsXYAccordingly(t *testing.T) {
 	c := NewContainer()
-	c.SetBounds(10, 20, 800, 200)
+	c.widgetArea = &sdl.Rect{10, 20, 800, 200}
 	w1 := NewSpacer(0, 300)
 	w2 := NewSpacer(0, 0)
 	w3 := NewSpacer(0, 0)

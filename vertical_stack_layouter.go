@@ -13,13 +13,13 @@ func (l *VerticalStackLayouter) Layout(c *Container) {
 		desiredHeights[i] = child.Dimensions().H
 	}
 
-	heights := distributeSizes(c.Bounds().H, desiredHeights)
+	heights := distributeSizes(c.WidgetArea().H, desiredHeights)
 
-	x := c.Bounds().X
-	y := c.Bounds().Y
+	x := c.WidgetArea().X
+	y := c.WidgetArea().Y
 	for i := range heights {
 		child := c.Get(i)
-		widths := distributeSizes(c.Bounds().W, []int32{child.Dimensions().W})
+		widths := distributeSizes(c.WidgetArea().W, []int32{child.Dimensions().W})
 		child.SetBounds(x, y, widths[0], heights[i])
 		y += heights[i]
 	}

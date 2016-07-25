@@ -70,6 +70,8 @@ func main() {
 	})
 
 	buttonContainer := ui.NewVerticalContainer()
+	buttonContainer.SetMargin(ui.Margin{3, 3, 3, 3})
+	buttonContainer.SetPadding(ui.Margin{3, 3, 3, 3})
 	button := ui.NewClickButton("I'm a button!", font)
 	button.AddEventHandler(ui.ButtonClicked, func(e *ui.Event) bool {
 		counter++
@@ -89,6 +91,7 @@ func main() {
 	v.SetBounds(0, 0, 800, 600)
 	c := ui.NewContainer()
 	c.SetDimensions(0, 200)
+	c.SetPadding(ui.Margin{3, 3, 3, 3})
 	c.Add(label)
 	c.Add(label2)
 	c.Add(label3)

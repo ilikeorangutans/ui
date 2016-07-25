@@ -37,3 +37,15 @@ func TestNestedContainerLayoutChildren(t *testing.T) {
 
 	assert.Equal(t, &sdl.Rect{0, 0, 200, 100}, child.Bounds())
 }
+
+func TestContainerAppliesMarginAndPadding(t *testing.T) {
+	c := NewContainer()
+	c.SetDimensions(400, 200)
+	c.SetMargin(Margin{3, 3, 3, 3})
+	c.SetPadding(Margin{5, 5, 5, 5})
+
+	c.Layout()
+
+	assert.Equal(t, &sdl.Rect{3, 3, 394, 194}, c.BorderArea())
+	assert.Equal(t, &sdl.Rect{8, 8, 384, 184}, c.WidgetArea())
+}
