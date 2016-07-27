@@ -78,13 +78,13 @@ func main() {
 		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))
 		return true
 	})
-	button.SetDimensions(200, 49)
-	button.SetMargin(ui.Margin{3, 3, 0, 3})
+	button.SetDimensions(0, 49)
+	button.SetMargin(ui.Margin{3, 3, 3, 3})
 	buttonContainer.Add(button)
 
 	toggle := ui.NewToggleButton("Toggle me!", font)
-	toggle.SetDimensions(200, 49)
-	toggle.SetMargin(ui.Margin{3, 3, 0, 3})
+	toggle.SetDimensions(0, 49)
+	toggle.SetMargin(ui.Margin{0, 3, 3, 3})
 	buttonContainer.Add(toggle)
 
 	v := ui.NewVerticalContainer()
@@ -98,6 +98,10 @@ func main() {
 	c.Add(buttonContainer)
 
 	v.Add(c)
+
+	s := ui.NewSpinner(font)
+	s.SetValue(1234)
+	buttonContainer.Add(s)
 
 	sdlEventHandler := &ui.SDLEventHandler{
 		Root: v,

@@ -65,6 +65,9 @@ func (l *Label) renderTexture(renderer *sdl.Renderer) {
 }
 
 func (l *Label) Draw(renderer *sdl.Renderer) {
+	if l.text == "" {
+		return
+	}
 	if l.updateTexture {
 		// TODO could this be deferred?
 		l.renderTexture(renderer)

@@ -33,6 +33,16 @@ func (s *ClickButtonDefaultState) Begin() {
 	s.Button.border.Style = RaisedBorderStyle{}
 }
 
+func (s *ClickButtonDefaultState) OnMouseClick(e *Event) bool {
+	data := e.Data.(MouseClickEvent)
+	if data.Button != LMB || data.State != ButtonDown {
+		return false
+	}
+
+	s.Button.transition("push")
+	return true
+}
+
 func (s *ClickButtonDefaultState) OnMouseOver(e *Event) bool {
 	s.Button.transition("hover")
 	return false
