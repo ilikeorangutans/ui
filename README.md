@@ -4,7 +4,14 @@ An experiment in building a simple ui toolkit using [github.com/veandco/go-sdl2]
 
 ## What does it look like?
 
+Pretty ugly.
+
+Buttons and Spinner:
 ![Buttons and spinner](http://g.recordit.co/O9S5Cf5DkG.gif)
+
+Basic resizing:
+
+![Resizing](http://recordit.co/LBxaczDXUP)
 
 ## Status
 
