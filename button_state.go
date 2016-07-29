@@ -129,7 +129,7 @@ func (s *ClickButtonClickState) Begin() {
 	// TODO set highlight active state
 	event := &Event{
 		Timestamp: uint32(time.Now().UnixNano()),
-		Type:      ButtonClicked,
+		Type:      ButtonReleased,
 		Emitter:   s.Button,
 		Data:      ButtonClickEvent{},
 	}
@@ -172,7 +172,14 @@ func (s *ToggleButtonHoverState) OnMouseClick(e *Event) bool {
 		return false
 	}
 
-	// TODO emit pushed event
+	s.Button.OnEvent(&Event{
+		Timestamp: e.Timestamp,
+		Type:      ButtonToggled,
+		Emitter:   s.Button,
+		Data: ButtonToggleEvent{
+			Pushed: true,
+		},
+	})
 	s.Button.transition("pushhover")
 	return true
 }
@@ -211,7 +218,14 @@ func (s *ToggleButtonPushedHoverState) OnMouseClick(e *Event) bool {
 		return false
 	}
 
-	// TODO emit unpushed event
+	s.Button.OnEvent(&Event{
+		Timestamp: e.Timestamp,
+		Type:      ButtonToggled,
+		Emitter:   s.Button,
+		Data: ButtonToggleEvent{
+			Pushed: false,
+		},
+	})
 	s.Button.transition("hover")
 	return true
 }

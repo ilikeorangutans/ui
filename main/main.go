@@ -73,7 +73,7 @@ func main() {
 	buttonContainer.SetMargin(ui.Margin{3, 3, 3, 3})
 	buttonContainer.SetPadding(ui.Margin{3, 3, 3, 3})
 	button := ui.NewClickButton("I'm a button!", font)
-	button.AddEventHandler(ui.ButtonClicked, func(e *ui.Event) bool {
+	button.AddEventHandler(ui.ButtonReleased, func(e *ui.Event) bool {
 		counter++
 		label.SetText(fmt.Sprintf("Button Clicked %d times", counter))
 		return true
@@ -82,9 +82,25 @@ func main() {
 	button.SetMargin(ui.Margin{3, 3, 3, 3})
 	buttonContainer.Add(button)
 
+	s := ui.NewSpinner(font)
+	s.SetValue(1234)
+	s.SetMargin(ui.Margin{3, 3, 3, 3})
+	buttonContainer.Add(s)
+
 	toggle := ui.NewToggleButton("Toggle me!", font)
 	toggle.SetDimensions(0, 49)
-	toggle.SetMargin(ui.Margin{0, 3, 3, 3})
+	toggle.SetMargin(ui.Margin{3, 3, 3, 3})
+	toggle.AddEventHandler(ui.ButtonToggled, func(e *ui.Event) bool {
+		data, _ := e.Data.(ui.ButtonToggleEvent)
+		if data.Pushed {
+			toggle.SetText("Spinner step: 5")
+			s.Step = 5
+		} else {
+			toggle.SetText("Spinner step: 1")
+			s.Step = 1
+		}
+		return true
+	})
 	buttonContainer.Add(toggle)
 
 	v := ui.NewVerticalContainer()
@@ -98,10 +114,6 @@ func main() {
 	c.Add(buttonContainer)
 
 	v.Add(c)
-
-	s := ui.NewSpinner(font)
-	s.SetValue(1234)
-	buttonContainer.Add(s)
 
 	sdlEventHandler := &ui.SDLEventHandler{
 		Root: v,

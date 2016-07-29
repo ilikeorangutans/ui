@@ -2,16 +2,24 @@ package ui
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/sdl_ttf"
 )
 
 const (
-	ButtonPushed  = "ButtonPushed"
-	ButtonClicked = "ButtonClicked"
+	ButtonPushed   = "ButtonPushed"
+	ButtonReleased = "ButtonReleased"
+	ButtonToggled  = "ButtonToggled"
 )
+
+// ButtonClickedEvent is the event payload emitted when a click button is changing its state.
+type ButtonClickEvent struct{}
+
+// ButtonToggleEvent is the event payload emitted when a toggle button is changing its state.
+type ButtonToggleEvent struct {
+	Pushed bool
+}
 
 // NewButton creates a new button with the given text as label.
 func NewClickButton(text string, font *ttf.Font) *Button {
@@ -69,7 +77,6 @@ type Button struct {
 }
 
 func (b *Button) transition(name string) {
-	log.Printf("Button.transition(): %s", name)
 	if b.state != nil {
 		b.state.End()
 	}
@@ -98,5 +105,3 @@ func (b *Button) OnMouseOver(e *Event) bool {
 func (b *Button) OnMouseOut(e *Event) bool {
 	return b.state.OnMouseOut(e)
 }
-
-type ButtonClickEvent struct{}

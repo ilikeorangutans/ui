@@ -33,12 +33,12 @@ func NewSpinner(font *ttf.Font) *Spinner {
 	buttonContainer.SetDimensions(17, 34)
 
 	plusButton := NewClickButton("+", font)
-	plusButton.AddEventHandler(ButtonClicked, func(e *Event) bool {
+	plusButton.AddEventHandler(ButtonReleased, func(e *Event) bool {
 		s.Increment()
 		return true
 	})
 	minusButton := NewClickButton("-", font)
-	minusButton.AddEventHandler(ButtonClicked, func(e *Event) bool {
+	minusButton.AddEventHandler(ButtonReleased, func(e *Event) bool {
 		s.Decrement()
 		return true
 	})

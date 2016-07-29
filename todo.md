@@ -1,8 +1,8 @@
 # To Do
 
+[ ] make all margins (margin, border, padding) actual Margins and have border be a style, i.e. SetBorder(Margin{}, BorderStyle)
 [ ] allow label to specify text alignment
 [ ] button needs an internal state machine (default -> hover -> pushed -> clicked...)
-[ ] support for padding
 [ ] figure out how to deal with events
   [ ] need to build hierarchy from the outside (certain components have children but don't expose them)
   [ ] widgets somehow need to communicate that they are interested in certain events
@@ -11,6 +11,7 @@
 
 # Done
 
+[x] support for padding
 [x] add a button type
 [x] add support for margins
 [x] move dimensions and bounds related code into reusable type
