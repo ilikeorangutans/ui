@@ -9,10 +9,6 @@ Pretty ugly.
 Buttons and Spinner:
 ![Buttons and spinner](http://g.recordit.co/O9S5Cf5DkG.gif)
 
-Basic resizing:
-
-![Resizing](http://recordit.co/LBxaczDXUP)
-
 ## Status
 
 - Basic layouting works using a simple box model
