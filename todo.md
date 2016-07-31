@@ -1,8 +1,6 @@
 # To Do
 
 [ ] make all margins (margin, border, padding) actual Margins and have border be a style, i.e. SetBorder(Margin{}, BorderStyle)
-[ ] allow label to specify text alignment
-[ ] button needs an internal state machine (default -> hover -> pushed -> clicked...)
 [ ] figure out how to deal with events
   [ ] need to build hierarchy from the outside (certain components have children but don't expose them)
   [ ] widgets somehow need to communicate that they are interested in certain events
@@ -11,7 +9,10 @@
 
 # Done
 
+[x] allow label to specify text alignment
+[x] BUG: buttons in a nested container don't seem to have margins rendered
 [x] support for padding
+[x] button needs an internal state machine (default -> hover -> pushed -> clicked...)
 [x] add a button type
 [x] add support for margins
 [x] move dimensions and bounds related code into reusable type
