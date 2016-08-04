@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	ButtonPushed   = "ButtonPushed"
-	ButtonReleased = "ButtonReleased"
-	ButtonToggled  = "ButtonToggled"
+	ButtonPushed   EventType = "ButtonPushed"
+	ButtonReleased EventType = "ButtonReleased"
+	ButtonToggled  EventType = "ButtonToggled"
 )
 
 // ButtonClickedEvent is the event payload emitted when a click button is changing its state.

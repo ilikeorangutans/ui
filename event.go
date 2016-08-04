@@ -2,12 +2,18 @@ package ui
 
 import "fmt"
 
+type EventType string
+
+const (
+	ValueChanged EventType = "ValueChanged"
+)
+
 // Event is a single event the ui framework is interested in. An Event has a timestamp (relative to app startup), a string Type, and a Data field with event specific payload.
 type Event struct {
 	// When the event occured
 	Timestamp uint32
 	// Type of the event
-	Type string
+	Type EventType
 	// Widget that emitted this event. Might be nil.
 	Emitter Widget
 	// Event payload. Might be nil.
@@ -25,12 +31,12 @@ func (e Event) String() string {
 type EventHandlerFunc func(event *Event) bool
 
 type EventHandlers struct {
-	eventHandlers map[string][]EventHandlerFunc
+	eventHandlers map[EventType][]EventHandlerFunc
 }
 
-func (h *EventHandlers) AddEventHandler(t string, handler EventHandlerFunc) {
+func (h *EventHandlers) AddEventHandler(t EventType, handler EventHandlerFunc) {
 	if h.eventHandlers == nil {
-		h.eventHandlers = make(map[string][]EventHandlerFunc)
+		h.eventHandlers = make(map[EventType][]EventHandlerFunc)
 	}
 	h.eventHandlers[t] = append(h.eventHandlers[t], handler)
 }
