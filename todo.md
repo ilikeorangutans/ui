@@ -1,5 +1,7 @@
 # To Do
 
+[ ] Keep one single WidgetStack for mouse events (instead of recalculating them over and over after moving - they only change on move?)
+[ ] Spinner should emit events
 [ ] make all margins (margin, border, padding) actual Margins and have border be a style, i.e. SetBorder(Margin{}, BorderStyle)
 [ ] figure out how to deal with events
   [ ] need to build hierarchy from the outside (certain components have children but don't expose them)
