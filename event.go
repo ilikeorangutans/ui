@@ -4,10 +4,6 @@ import "fmt"
 
 type EventType string
 
-const (
-	ValueChanged EventType = "ValueChanged"
-)
-
 // Event is a single event the ui framework is interested in. An Event has a timestamp (relative to app startup), a string Type, and a Data field with event specific payload.
 type Event struct {
 	// When the event occured

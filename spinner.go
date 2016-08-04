@@ -7,6 +7,14 @@ import (
 	ttf "github.com/veandco/go-sdl2/sdl_ttf"
 )
 
+const (
+	SpinnerChanged EventType = "SpinnerChanged"
+)
+
+type SpinnerChangedEvent struct {
+	NewValue float64
+}
+
 func NewSpinner(font *ttf.Font) *Spinner {
 	s := &Spinner{
 		Container: Container{
@@ -32,18 +40,18 @@ func NewSpinner(font *ttf.Font) *Spinner {
 	s.Container.Add(buttonContainer)
 	buttonContainer.SetDimensions(17, 34)
 
-	plusButton := NewClickButton("+", font)
-	plusButton.AddEventHandler(ButtonReleased, func(e *Event) bool {
+	s.plusButton = NewClickButton("+", font)
+	s.plusButton.AddEventHandler(ButtonReleased, func(e *Event) bool {
 		s.Increment()
 		return true
 	})
-	minusButton := NewClickButton("-", font)
-	minusButton.AddEventHandler(ButtonReleased, func(e *Event) bool {
+	s.minusButton = NewClickButton("-", font)
+	s.minusButton.AddEventHandler(ButtonReleased, func(e *Event) bool {
 		s.Decrement()
 		return true
 	})
-	buttonContainer.Add(plusButton)
-	buttonContainer.Add(minusButton)
+	buttonContainer.Add(s.plusButton)
+	buttonContainer.Add(s.minusButton)
 
 	s.Layout()
 
@@ -55,6 +63,7 @@ type Spinner struct {
 	Initial, Value, Max, Min, Step float64
 	Format                         string
 	label                          *Label
+	plusButton, minusButton        *Button
 }
 
 func (s *Spinner) SetValue(value float64) {
@@ -72,6 +81,7 @@ func (s *Spinner) Increment() {
 	}
 	s.Value += s.Step
 	s.updateLabel()
+	s.fireChangedEvent()
 }
 
 func (s *Spinner) Decrement() {
@@ -80,6 +90,18 @@ func (s *Spinner) Decrement() {
 	}
 	s.Value -= s.Step
 	s.updateLabel()
+	s.fireChangedEvent()
+}
+
+func (s *Spinner) fireChangedEvent() {
+	s.OnEvent(&Event{
+		Timestamp: 0,
+		Type:      SpinnerChanged,
+		Emitter:   s,
+		Data: SpinnerChangedEvent{
+			NewValue: s.Value,
+		},
+	})
 }
 
 func (s *Spinner) formattedValue() string {
@@ -88,4 +110,8 @@ func (s *Spinner) formattedValue() string {
 		format = "%d"
 	}
 	return fmt.Sprintf(format, s.Value)
+}
+
+func (s *Spinner) Destroy() {
+	s.label.Destroy()
 }
