@@ -83,8 +83,14 @@ func main() {
 	buttonContainer.Add(button)
 
 	s := ui.NewSpinner(font)
-	s.SetValue(1234)
+	s.SetValue(0)
 	s.SetMargin(ui.Margin{3, 3, 3, 3})
+	s.AddEventHandler(ui.SpinnerChanged, func(e *ui.Event) bool {
+		data, _ := e.Data.(ui.SpinnerChangedEvent)
+		v := int32(data.NewValue)
+		label3.SetMargin(ui.Margin{v, v, v, v})
+		return true
+	})
 	buttonContainer.Add(s)
 
 	toggle := ui.NewToggleButton("Toggle me!", font)
