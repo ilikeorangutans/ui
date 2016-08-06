@@ -4,21 +4,21 @@ import "github.com/veandco/go-sdl2/sdl"
 
 func NewContainer() *Container {
 	return &Container{
-		sizeable: newSizeable(),
+		BoxModel: newBoxModel(),
 		layouter: &HorizontalStackLayouter{},
 	}
 }
 
 func NewVerticalContainer() *Container {
 	return &Container{
-		sizeable: newSizeable(),
+		BoxModel: newBoxModel(),
 		layouter: &VerticalStackLayouter{},
 	}
 }
 
 type Container struct {
 	EventHandlers
-	sizeable
+	BoxModel
 	children []Widget
 	layouter Layouter
 }
@@ -37,7 +37,7 @@ func (c *Container) Add(child Widget) Widget {
 }
 
 func (c *Container) Layout() {
-	c.sizeable.Layout()
+	c.BoxModel.Layout()
 	c.layouter.Layout(c)
 	for i := range c.children {
 		c.children[i].Layout()
@@ -45,7 +45,7 @@ func (c *Container) Layout() {
 }
 
 func (c *Container) Draw(renderer *sdl.Renderer) {
-	c.sizeable.border.Draw(renderer)
+	c.BoxModel.border.Draw(renderer)
 
 	for i := range c.children {
 		child := c.children[i]

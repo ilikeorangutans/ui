@@ -37,7 +37,7 @@ func loadFont() *ttf.Font {
 }
 
 type TestWidget struct {
-	sizeable
+	BoxModel
 	EventHandlers
 }
 

@@ -7,7 +7,7 @@ import (
 
 func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 	return &Label{
-		sizeable: sizeable{
+		BoxModel: BoxModel{
 			dimensions: &sdl.Rect{},
 			bounds:     &sdl.Rect{},
 			border:     EmptyBorder(),
@@ -23,7 +23,7 @@ func NewLabel(text string, font *ttf.Font, color sdl.Color) *Label {
 }
 
 type Label struct {
-	sizeable
+	BoxModel
 	*EventHandlers
 	text           string
 	font           *ttf.Font
@@ -43,7 +43,7 @@ func (l *Label) SetText(text string) {
 }
 
 func (l *Label) Layout() {
-	l.sizeable.Layout()
+	l.BoxModel.Layout()
 	l.widgetArea = l.alignment.Fill(l.WidgetArea(), l.textDimensions)
 }
 

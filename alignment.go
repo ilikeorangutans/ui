@@ -6,6 +6,7 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
+// HorizontalAlignment describes how a widget will be laid out horizontally within its assigned bounds.
 type HorizontalAlignment uint8
 
 func (a HorizontalAlignment) String() string {
@@ -30,6 +31,7 @@ const (
 	Right
 )
 
+// VerticalAlignment describes how a widget will be laid out vertically within its assigned bounds.
 type VerticalAlignment uint8
 
 func (a VerticalAlignment) String() string {
@@ -60,6 +62,7 @@ type Alignment struct {
 	Horizontal HorizontalAlignment
 }
 
+// Fill fits the given Rect into the available Rect and returns a Rect according to its settings.
 func (a Alignment) Fill(available *sdl.Rect, fill *sdl.Rect) *sdl.Rect {
 	if a.Vertical == FillVertical && a.Horizontal == FillHorizontal {
 		return available

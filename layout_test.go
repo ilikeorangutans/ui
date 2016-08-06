@@ -7,16 +7,16 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func TestSizeableSetsBoundsOnLayoutIfOnlyDimensionsAreSet(t *testing.T) {
-	s := newSizeable()
+func TestBoxModelSetsBoundsOnLayoutIfOnlyDimensionsAreSet(t *testing.T) {
+	s := newBoxModel()
 	s.SetDimensions(200, 100)
 	s.Layout()
 
 	assert.Equal(t, &sdl.Rect{0, 0, 200, 100}, s.Bounds())
 }
 
-func TestNewSizeableWithDimensions(t *testing.T) {
-	s := newSizeableWithDimensions(200, 100)
+func TestNewBoxModelWithDimensions(t *testing.T) {
+	s := newBoxModelWithDimensions(200, 100)
 	s.SetBounds(0, 0, 200, 100)
 	s.Layout()
 
@@ -26,8 +26,8 @@ func TestNewSizeableWithDimensions(t *testing.T) {
 	assert.Equal(t, &sdl.Rect{0, 0, 200, 100}, s.WidgetArea())
 }
 
-func TestSizeableLayoutWithMarginAndBorderAndPadding(t *testing.T) {
-	s := newSizeableWithDimensions(200, 100)
+func TestBoxModelLayoutWithMarginAndBorderAndPadding(t *testing.T) {
+	s := newBoxModelWithDimensions(200, 100)
 	s.SetBounds(0, 0, 200, 100)
 	s.SetMargin(Margin{3, 3, 3, 3})
 	s.SetBorder(NewBorder(13, sdl.Color{}))
@@ -41,7 +41,7 @@ func TestSizeableLayoutWithMarginAndBorderAndPadding(t *testing.T) {
 }
 
 func TestAlignmentDoesNothingIfWidgetFillsSpace(t *testing.T) {
-	s := newSizeableWithDimensions(200, 100)
+	s := newBoxModelWithDimensions(200, 100)
 	s.SetBounds(0, 0, 100, 50)
 	s.Layout()
 
@@ -49,8 +49,8 @@ func TestAlignmentDoesNothingIfWidgetFillsSpace(t *testing.T) {
 	assert.Equal(t, &sdl.Rect{0, 0, 100, 50}, s.WidgetArea())
 }
 
-func TestSizeableWithBorderHasSmallerDrawArea(t *testing.T) {
-	s := newSizeableWithDimensions(200, 100)
+func TestBoxModelWithBorderHasSmallerDrawArea(t *testing.T) {
+	s := newBoxModelWithDimensions(200, 100)
 	s.SetBorder(&Border{Margin: Margin{10, 20, 5, 15}})
 	s.Layout()
 

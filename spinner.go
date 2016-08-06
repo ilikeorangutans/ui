@@ -18,7 +18,7 @@ type SpinnerChangedEvent struct {
 func NewSpinner(font *ttf.Font) *Spinner {
 	s := &Spinner{
 		Container: Container{
-			sizeable: newSizeable(),
+			BoxModel: newBoxModel(),
 			layouter: &HorizontalStackLayouter{},
 		},
 		Step:   1.0,

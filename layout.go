@@ -2,8 +2,8 @@ package ui
 
 import "github.com/veandco/go-sdl2/sdl"
 
-func newSizeable() sizeable {
-	return sizeable{
+func newBoxModel() BoxModel {
+	return BoxModel{
 		dimensions: &sdl.Rect{},
 		bounds:     &sdl.Rect{},
 		border:     EmptyBorder(),
@@ -11,8 +11,8 @@ func newSizeable() sizeable {
 	}
 }
 
-func newSizeableWithDimensions(w, h int32) sizeable {
-	return sizeable{
+func newBoxModelWithDimensions(w, h int32) BoxModel {
+	return BoxModel{
 		dimensions: &sdl.Rect{
 			W: w,
 			H: h,
@@ -26,56 +26,56 @@ func newSizeableWithDimensions(w, h int32) sizeable {
 	}
 }
 
-func (s *sizeable) layoutChanged() {
+func (s *BoxModel) layoutChanged() {
 	s.layoutHasChanged = true
 }
 
 // Dimensions returns the desired size.
-func (s *sizeable) Dimensions() *sdl.Rect {
+func (s *BoxModel) Dimensions() *sdl.Rect {
 	return s.dimensions
 }
 
-func (s *sizeable) SetDimensions(w, h int32) {
+func (s *BoxModel) SetDimensions(w, h int32) {
 	s.dimensions.W = w
 	s.dimensions.H = h
 	s.layoutChanged()
 }
 
 // Bounds returns the size assigned by the layouter.
-func (s *sizeable) Bounds() *sdl.Rect {
+func (s *BoxModel) Bounds() *sdl.Rect {
 	return s.bounds
 }
 
 // DrawArea returns the area in which the widget is to be drawn, i.e.
 // bounds, as assigned by the layouter, minus all margins
-func (s *sizeable) WidgetArea() *sdl.Rect {
+func (s *BoxModel) WidgetArea() *sdl.Rect {
 	return s.widgetArea
 }
 
-func (s *sizeable) SetMargin(m Margin) {
+func (s *BoxModel) SetMargin(m Margin) {
 	s.margin = m
 	s.layoutChanged()
 }
 
-func (s *sizeable) SetPadding(m Margin) {
+func (s *BoxModel) SetPadding(m Margin) {
 	s.padding = m
 	s.layoutChanged()
 }
 
-func (s *sizeable) PaddingArea() *sdl.Rect {
+func (s *BoxModel) PaddingArea() *sdl.Rect {
 	return s.paddingArea
 }
 
-func (s *sizeable) SetBorder(b *Border) {
+func (s *BoxModel) SetBorder(b *Border) {
 	s.border = b
 	s.layoutChanged()
 }
 
-func (s *sizeable) BorderArea() *sdl.Rect {
+func (s *BoxModel) BorderArea() *sdl.Rect {
 	return s.borderArea
 }
 
-func (s *sizeable) SetBounds(x, y, w, h int32) {
+func (s *BoxModel) SetBounds(x, y, w, h int32) {
 	s.bounds.X = x
 	s.bounds.Y = y
 	s.bounds.W = w
@@ -83,7 +83,7 @@ func (s *sizeable) SetBounds(x, y, w, h int32) {
 	s.layoutChanged()
 }
 
-func (s *sizeable) Layout() {
+func (s *BoxModel) Layout() {
 	if !s.layoutHasChanged {
 		return
 	}
@@ -102,25 +102,25 @@ func (s *sizeable) Layout() {
 	s.layoutHasChanged = false
 }
 
-func (s *sizeable) SetAlignment(a Alignment) {
+func (s *BoxModel) SetAlignment(a Alignment) {
 	s.alignment = a
 	s.layoutChanged()
 }
 
-func (s *sizeable) Destroy() {
+func (s *BoxModel) Destroy() {
 }
 
-// sizeable is the base type for layouting widgets. A sizeable widget consists of
+// BoxModel is the base type for layouting widgets. A BoxModel widget consists of
 // several layered elements. From the outside to the inside:
 // - border: rendererd outside of everything
 // - padding: blank space inside of the border
 // - widget: the actual widget to be rendered
-// For each of these elements there's a corresponding area that sizeable will
+// For each of these elements there's a corresponding area that BoxModel will
 // keep up to date based on the bounds set on the widget:
 // - BorderArea
 // - PaddingArea
 // - WidgetArea
-type sizeable struct {
+type BoxModel struct {
 	alignment        Alignment
 	border           *Border
 	borderArea       *sdl.Rect
