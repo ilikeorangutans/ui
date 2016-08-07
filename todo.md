@@ -1,24 +1,24 @@
 # To Do
 
-[ ] Keep one single WidgetStack for mouse events (instead of recalculating them over and over after moving - they only change on move?)
-[ ] make all margins (margin, border, padding) actual Margins and have border be a style, i.e. SetBorder(Margin{}, BorderStyle)
-[ ] figure out how to deal with events
-  [ ] need to build hierarchy from the outside (certain components have children but don't expose them)
-  [ ] widgets somehow need to communicate that they are interested in certain events
-[ ] make (certain?) widgets focusable
-[ ] don't render widgets if bounds are 0
+- [ ] Keep one single WidgetStack for mouse events (instead of recalculating them over and over after moving - they only change on move?)
+- [ ] make all margins (margin, border, padding) actual Margins and have border be a style, i.e. SetBorder(Margin{}, BorderStyle)
+- [ ] figure out how to deal with events
+  - [ ] need to build hierarchy from the outside (certain components have children but don't expose them)
+  - [ ] widgets somehow need to communicate that they are interested in certain events
+- [ ] make (certain?) widgets focusable
+- [ ] don't render widgets if bounds are 0
 
 # Done
 
-[x] Spinner should emit events
-[x] allow label to specify text alignment
-[x] BUG: buttons in a nested container don't seem to have margins rendered
-[x] support for padding
-[x] button needs an internal state machine (default -> hover -> pushed -> clicked...)
-[x] add a button type
-[x] add support for margins
-[x] move dimensions and bounds related code into reusable type
-[x] add border type
+- [x] Spinner should emit events
+- [x] allow label to specify text alignment
+- [x] BUG: buttons in a nested container don't seem to have margins rendered
+- [x] support for padding
+- [x] button needs an internal state machine (default -> hover -> pushed -> clicked...)
+- [x] add a button type
+- [x] add support for margins
+- [x] move dimensions and bounds related code into reusable type
+- [x] add border type
 
 # Ideas
 
