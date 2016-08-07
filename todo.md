@@ -1,5 +1,6 @@
 # To Do
 
+- [ ] Component: text area or text field for larger amounts of text
 - [ ] Keep one single WidgetStack for mouse events (instead of recalculating them over and over after moving - they only change on move?)
 - [ ] make all margins (margin, border, padding) actual Margins and have border be a style, i.e. SetBorder(Margin{}, BorderStyle)
 - [ ] figure out how to deal with events
