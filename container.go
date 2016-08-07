@@ -16,6 +16,13 @@ func NewVerticalContainer() *Container {
 	}
 }
 
+func NewHorizontalContainer() *Container {
+	return &Container{
+		BoxModel: newBoxModel(),
+		layouter: &HorizontalStackLayouter{},
+	}
+}
+
 type Container struct {
 	EventHandlers
 	BoxModel
