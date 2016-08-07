@@ -111,7 +111,7 @@ func main() {
 
 	v := ui.NewVerticalContainer()
 	v.SetBounds(0, 0, 800, 600)
-	c := ui.NewContainer()
+	c := ui.NewHorizontalContainer()
 	c.SetDimensions(0, 200)
 	c.SetPadding(ui.Margin{3, 3, 3, 3})
 	c.Add(label)

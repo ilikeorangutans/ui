@@ -17,7 +17,7 @@ func TestButtonEmitsButtonReleasedEvent(t *testing.T) {
 		return true
 	})
 
-	b.OnEvent(&Event{Type: "MouseClick", Data: MouseClickEvent{Button: LMB, State: ButtonDown}})
+	b.OnEvent(&Event{Type: "MouseClickEvent", Data: MouseClickEvent{Button: LMB, State: ButtonDown}})
 	e := NewMouseClickEvent(123, LMB, ButtonUp, 10, 10)
 	b.OnEvent(e)
 

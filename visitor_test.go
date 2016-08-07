@@ -13,7 +13,7 @@ func TestLocatingVisitorReturnsContainer(t *testing.T) {
 		X: 20,
 		Y: 20,
 	}
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.SetBounds(0, 0, 100, 100)
 
 	c.Visit(f)
@@ -25,7 +25,7 @@ func TestLocatingVisitorReturnsContainerChildren(t *testing.T) {
 		X: 20,
 		Y: 20,
 	}
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.SetBounds(0, 0, 100, 100)
 	c.Add(NewSpacer(50, 100))
 	c.Add(NewSpacer(50, 100))

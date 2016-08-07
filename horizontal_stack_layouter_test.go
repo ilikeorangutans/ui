@@ -8,7 +8,7 @@ import (
 )
 
 func TestHorizontalStackLayouterChildFillsFullWidth(t *testing.T) {
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.Dimensions().W = 800
 	c.Bounds().W = 800
 	w := NewSpacer(0, 0)
@@ -21,7 +21,7 @@ func TestHorizontalStackLayouterChildFillsFullWidth(t *testing.T) {
 }
 
 func TestHorizontalStackLayouterChildrenFillFullWidth(t *testing.T) {
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.WidgetArea().W = 800
 	c.WidgetArea().H = 200
 	c.WidgetArea().Y = 100
@@ -43,7 +43,7 @@ func TestHorizontalStackLayouterChildrenFillFullWidth(t *testing.T) {
 }
 
 func TestHorizontalStackLayouterWithFixedWithChild(t *testing.T) {
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.Dimensions().W = 800
 	c.WidgetArea().W = 800
 	w := NewSpacer(200, 0)
@@ -59,7 +59,7 @@ func TestHorizontalStackLayouterWithFixedWithChild(t *testing.T) {
 }
 
 func TestHorizontalStackLayouterSetsXYAccordingly(t *testing.T) {
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.widgetArea = &sdl.Rect{10, 20, 800, 200}
 	w1 := NewSpacer(0, 300)
 	w2 := NewSpacer(0, 0)

@@ -11,6 +11,7 @@
 
 # Done
 
+- [x] Containers need to be able to clear their children
 - [x] Spinner should emit events
 - [x] allow label to specify text alignment
 - [x] BUG: buttons in a nested container don't seem to have margins rendered
@@ -22,6 +23,10 @@
 - [x] add border type
 
 # Ideas
+
+## View State System
+
+Managing UIs is a pain, would love to have a type that manages view states and their transitions.
 
 # Thoughts
 

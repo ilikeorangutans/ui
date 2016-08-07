@@ -10,7 +10,7 @@ import (
 func TestVerticalStackLayouter(t *testing.T) {
 	layouter := &VerticalStackLayouter{}
 
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.widgetArea = &sdl.Rect{0, 0, 200, 300}
 	s1 := c.Add(NewSpacer(100, 100))
 	s2 := c.Add(NewSpacer(0, 100))

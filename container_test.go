@@ -8,7 +8,7 @@ import (
 )
 
 func TestRegisterEventHandlers(t *testing.T) {
-	c := NewContainer()
+	c := NewHorizontalContainer()
 
 	called := false
 	c.AddEventHandler("MouseClickEvent", func(e *Event) bool {
@@ -25,11 +25,11 @@ func TestRegisterEventHandlers(t *testing.T) {
 }
 
 func TestNestedContainerLayoutChildren(t *testing.T) {
-	parent := NewContainer()
+	parent := NewHorizontalContainer()
 	parent.SetDimensions(200, 100)
 	//parent.SetBounds(0, 0, 200, 100)
 	// TODO BUG it's not asigning bounds when only assigning dimensions!
-	child := NewContainer()
+	child := NewHorizontalContainer()
 	child.SetDimensions(0, 0)
 	parent.Add(child)
 
@@ -39,7 +39,7 @@ func TestNestedContainerLayoutChildren(t *testing.T) {
 }
 
 func TestContainerAppliesMarginAndPadding(t *testing.T) {
-	c := NewContainer()
+	c := NewHorizontalContainer()
 	c.SetDimensions(400, 200)
 	c.SetMargin(Margin{3, 3, 3, 3})
 	c.SetPadding(Margin{5, 5, 5, 5})
@@ -48,4 +48,13 @@ func TestContainerAppliesMarginAndPadding(t *testing.T) {
 
 	assert.Equal(t, &sdl.Rect{3, 3, 394, 194}, c.BorderArea())
 	assert.Equal(t, &sdl.Rect{8, 8, 384, 184}, c.WidgetArea())
+}
+
+func TestContainerClearRemovesAllChildren(t *testing.T) {
+	c := NewHorizontalContainer()
+	c.Add(NewSpacer(0, 0))
+	c.Add(NewSpacer(0, 0))
+
+	c.Clear()
+	assert.Len(t, c.Children(), 0)
 }

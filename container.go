@@ -2,7 +2,7 @@ package ui
 
 import "github.com/veandco/go-sdl2/sdl"
 
-func NewContainer() *Container {
+func NewHorizontalContainer() *Container {
 	return &Container{
 		BoxModel: newBoxModel(),
 		layouter: &HorizontalStackLayouter{},
@@ -13,13 +13,6 @@ func NewVerticalContainer() *Container {
 	return &Container{
 		BoxModel: newBoxModel(),
 		layouter: &VerticalStackLayouter{},
-	}
-}
-
-func NewHorizontalContainer() *Container {
-	return &Container{
-		BoxModel: newBoxModel(),
-		layouter: &HorizontalStackLayouter{},
 	}
 }
 
@@ -41,6 +34,17 @@ func (c *Container) Children() []Widget {
 func (c *Container) Add(child Widget) Widget {
 	c.children = append(c.children, child)
 	return child
+}
+
+// Clear removes all children from a container and destroys them.
+func (c *Container) Clear() {
+	for i := range c.children {
+		c.Get(i).Destroy()
+		c.children[i] = nil
+	}
+
+	c.children = make([]Widget, 0)
+
 }
 
 func (c *Container) Layout() {
@@ -68,7 +72,5 @@ func (c *Container) Visit(visitor WidgetVisitor) {
 }
 
 func (c *Container) Destroy() {
-	for i := range c.children {
-		c.children[i].Destroy()
-	}
+	c.Clear()
 }
