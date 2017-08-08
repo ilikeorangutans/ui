@@ -26,7 +26,7 @@ func loadFont() *ttf.Font {
 	if runtime.GOOS == "darwin" {
 		fontPath = "/Library/Fonts/Verdana.ttf"
 	} else if runtime.GOOS == "linux" {
-		fontPath = "/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf"
+		fontPath = "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf"
 	}
 	font, err := ttf.OpenFont(fontPath, 12)
 	if err != nil {

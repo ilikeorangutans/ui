@@ -15,9 +15,11 @@ func loadFont() *ttf.Font {
 	if runtime.GOOS == "darwin" {
 		fontPath = "/Library/Fonts/Verdana.ttf"
 	} else if runtime.GOOS == "linux" {
-		fontPath = "/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf"
+		fontPath = "/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-M.ttf"
 	}
 	font, err := ttf.OpenFont(fontPath, 12)
+	font.SetKerning(true)
+	font.SetHinting(ttf.HINTING_MONO)
 	if err != nil {
 		panic(err)
 	}
