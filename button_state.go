@@ -30,7 +30,7 @@ type ClickButtonDefaultState struct {
 }
 
 func (s *ClickButtonDefaultState) Begin() {
-	s.Button.border.Style = RaisedBorderStyle{}
+	s.Button.border.drawBorder = RaisedBorderStyle
 }
 
 func (s *ClickButtonDefaultState) OnMouseClick(e *Event) bool {
@@ -59,7 +59,7 @@ type ClickButtonHoverState struct {
 
 func (s *ClickButtonHoverState) Begin() {
 	// TODO set a highlight state
-	s.Button.border.Style = RaisedBorderStyle{}
+	s.Button.border.drawBorder = RaisedBorderStyle
 }
 
 func (s *ClickButtonHoverState) String() string {
@@ -92,7 +92,7 @@ func (s *ClickButtonPushState) String() string {
 func (s *ClickButtonPushState) Begin() {
 	// TODO fire push event
 	// TODO how to deal with autorepeat?
-	s.Button.border.Style = &LoweredBorderStyle{}
+	s.Button.border.drawBorder = LoweredBorderStyle
 }
 
 func (s *ClickButtonPushState) OnMouseClick(e *Event) bool {
@@ -145,7 +145,7 @@ type ToggleButtonDefaultState struct {
 }
 
 func (s *ToggleButtonDefaultState) Begin() {
-	s.Button.border.Style = RaisedBorderStyle{}
+	s.Button.border.drawBorder = RaisedBorderStyle
 }
 
 func (s *ToggleButtonDefaultState) OnMouseOver(e *Event) bool {
@@ -158,7 +158,7 @@ type ToggleButtonHoverState struct {
 }
 
 func (s *ToggleButtonHoverState) Begin() {
-	s.Button.border.Style = RaisedBorderStyle{}
+	s.Button.border.drawBorder = RaisedBorderStyle
 }
 
 func (s *ToggleButtonHoverState) OnMouseOut(e *Event) bool {
@@ -198,7 +198,7 @@ type ToggleButtonPushedState struct {
 }
 
 func (s *ToggleButtonPushedState) Begin() {
-	s.Button.border.Style = &LoweredBorderStyle{}
+	s.Button.border.drawBorder = LoweredBorderStyle
 }
 
 func (s *ToggleButtonPushedState) OnMouseOver(e *Event) bool {
@@ -212,7 +212,7 @@ type ToggleButtonPushedHoverState struct {
 }
 
 func (s *ToggleButtonPushedHoverState) Begin() {
-	s.Button.border.Style = &LoweredBorderStyle{}
+	s.Button.border.drawBorder = LoweredBorderStyle
 }
 
 func (s *ToggleButtonPushedHoverState) OnMouseOut(e *Event) bool {

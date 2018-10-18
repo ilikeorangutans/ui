@@ -2,7 +2,8 @@ package ui
 
 import "github.com/veandco/go-sdl2/sdl"
 
-// Margin is a set of margins: top, right, bottom, and left
+// Margin is a set of margins, that means extra space at the top, right, bottom, and left of the widget. Margins are
+// drawn within the bounds of a widget.
 type Margin struct {
 	Top, Right, Bottom, Left int32
 }

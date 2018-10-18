@@ -62,17 +62,3 @@ func (s *SDLEventHandler) handleMouseMotion(t *sdl.MouseMotionEvent) {
 		w.OnEvent(event)
 	}
 }
-
-func findComponentsUnder(root Widget, x, y int32) WidgetStack {
-	// TODO: this could probably be cached?
-	f := &LocatingFinder{
-		X: x,
-		Y: y,
-	}
-	root.Visit(f)
-	return f.Stack
-}
-
-func pointInsideOfRect(p sdl.Point, r *sdl.Rect) bool {
-	return r.X <= p.X && p.X < r.X+r.W && r.Y <= p.Y && p.Y < r.Y+r.H
-}

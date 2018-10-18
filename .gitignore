@@ -1,3 +1,5 @@
 ui
 vendor
 tags
+.idea
+.DS_Store

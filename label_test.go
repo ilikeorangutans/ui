@@ -41,7 +41,7 @@ func TestLabelWithMarginBorderAndPadding(t *testing.T) {
 	l.SetBounds(11, 13, 200, 100)
 	l.SetAlignment(Alignment{FillVertical, FillHorizontal})
 	l.SetMargin(Margin{3, 3, 3, 3})
-	l.SetBorder(NewBorder(5, sdl.Color{}))
+	l.SetBorder(NewFlatBorder(5, sdl.Color{}))
 	l.SetPadding(Margin{7, 7, 7, 7})
 
 	l.Layout()

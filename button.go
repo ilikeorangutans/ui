@@ -57,8 +57,7 @@ func newButton(text string, font *ttf.Font) *Button {
 		Label: NewLabel(text, font, sdl.Color{}),
 	}
 
-	border := NewBorder(2, sdl.Color{})
-	border.Style = RaisedBorderStyle{}
+	border := NewBorder(2, sdl.Color{}, RaisedBorderStyle)
 	b.SetBorder(border)
 	b.Label.SetAlignment(Alignment{Middle, Center})
 

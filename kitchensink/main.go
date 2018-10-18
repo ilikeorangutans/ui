@@ -15,7 +15,7 @@ func loadFont() *ttf.Font {
 	if runtime.GOOS == "darwin" {
 		fontPath = "/Library/Fonts/Verdana.ttf"
 	} else if runtime.GOOS == "linux" {
-		fontPath = "/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-M.ttf"
+		fontPath = "/usr/share/fonts/truetype/ubuntu/Ubuntu-M.ttf"
 	}
 	font, err := ttf.OpenFont(fontPath, 12)
 	font.SetKerning(true)
@@ -28,6 +28,7 @@ func loadFont() *ttf.Font {
 }
 
 func main() {
+	runtime.LockOSThread()
 	sdl.Init(sdl.INIT_EVERYTHING)
 	defer sdl.Quit()
 	ttf.Init()
@@ -50,14 +51,14 @@ func main() {
 	counter := 0
 
 	label := ui.NewLabel("horray", font, sdl.Color{R: 255, G: 255, B: 255, A: 255})
-	label.SetBorder(ui.NewBorder(10, sdl.Color{G: 255, A: 255}))
+	label.SetBorder(ui.NewFlatBorder(10, sdl.Color{G: 255, A: 255}))
 	label.Dimensions().W = 200
 	label.SetAlignment(ui.Alignment{ui.Middle, ui.Center})
 
 	label2 := ui.NewLabel("label two", font, sdl.Color{R: 255, G: 255, B: 0, A: 255})
-	label2.SetBorder(ui.NewBorder(35, sdl.Color{R: 255, A: 255}))
+	label2.SetBorder(ui.NewFlatBorder(35, sdl.Color{R: 255, A: 255}))
 	label3 := ui.NewLabel("label 3 this is awesome!!", font, sdl.Color{R: 255, G: 0, B: 255, A: 255})
-	label3.SetBorder(ui.NewBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
+	label3.SetBorder(ui.NewFlatBorder(1, sdl.Color{R: 80, B: 255, A: 255}))
 	label3.Dimensions().W = 300
 	label3.SetAlignment(ui.Alignment{ui.Bottom, ui.Right})
 	label3.SetPadding(ui.Margin{11, 11, 11, 11})

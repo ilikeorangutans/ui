@@ -2,8 +2,6 @@ package ui
 
 import (
 	"log"
-
-	"github.com/veandco/go-sdl2/sdl"
 )
 
 type WidgetVisitor interface {
@@ -23,6 +21,7 @@ func (v *LoggingVisitor) VisitWidget(w Widget) {
 	log.Printf("Visiting widget %v\n", w)
 }
 
+// LocatingFinder visits containers until it has found a leaf of the widget graph that contains the given coordinates.
 type LocatingFinder struct {
 	X, Y  int32
 	Stack []Widget
@@ -40,8 +39,4 @@ func (v *LocatingFinder) VisitWidget(w Widget) {
 	if PointInRect(v.X, v.Y, w.Bounds()) {
 		v.Stack = append(v.Stack, w)
 	}
-}
-
-func PointInRect(x, y int32, rect *sdl.Rect) bool {
-	return rect.X <= x && x < rect.X+rect.W && rect.Y <= y && y < rect.Y+rect.H
 }

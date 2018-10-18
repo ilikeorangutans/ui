@@ -30,7 +30,7 @@ func TestBoxModelLayoutWithMarginAndBorderAndPadding(t *testing.T) {
 	s := newBoxModelWithDimensions(200, 100)
 	s.SetBounds(0, 0, 200, 100)
 	s.SetMargin(Margin{3, 3, 3, 3})
-	s.SetBorder(NewBorder(13, sdl.Color{}))
+	s.SetBorder(NewFlatBorder(13, sdl.Color{}))
 	s.SetPadding(Margin{11, 11, 11, 11})
 	s.Layout()
 

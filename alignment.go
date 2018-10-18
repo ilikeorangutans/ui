@@ -99,8 +99,7 @@ func (a Alignment) Fill(available *sdl.Rect, fill *sdl.Rect) *sdl.Rect {
 		h = fill.H
 	}
 
-	result := &sdl.Rect{x, y, w, h}
-	return result
+	return &sdl.Rect{x, y, w, h}
 }
 
 func (a Alignment) String() string {
